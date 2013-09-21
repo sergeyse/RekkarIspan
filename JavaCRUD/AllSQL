@@ -1,0 +1,1 @@
+SELECT Navn, Gateadresse,Poststed,Telefon  FROM dbo.tabOrdre  WHERE Ordrenummer = 177903;

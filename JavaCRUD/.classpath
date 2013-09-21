@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="C:/Documents and Settings/gsafgreidsla/Desktop/Java/mysql-connector-java-5.1.22-bin.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/mySQL/MSsqlDriver/sqljdbc_4.0/enu/sqljdbc4.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Documents and Settings/gsafgreidsla/Desktop/Java/seaglasslookandfeel-0.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

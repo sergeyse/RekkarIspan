@@ -1,0 +1,21 @@
+ BrukerID BrukerFornavn BrukerEtternavn  Initialer Brukernavn         Passord     Epost                EpostPrivat        Direktenummer TelefonPrivat Mobil    Stilling   NivåID Avdelingskode Inaktiv StativBehandling 
+ -------- ------------- ---------------- --------- ------------------ ----------- -------------------- ------------------ ------------- ------------- -------- ---------- ------ ------------- ------- ---------------- 
+        1 Ólafur        Guðjónsson       NULL      olafur             rufalo53    oli@glerskalinn.is   www.glerskalinn.is 557 5580      NULL          NULL     NULL            5          NULL false   false           
+        2 Þórhallur     Atlason          NULL      toti               totitofra31 toti@glerskalinn.is  www.glerskalinn.is 557 5580      586 1909      897 9904 Sölumaður       5          NULL false   false           
+        3 Nikulás       Arnarsson        NA        nikki              bjartur     nikki@glerskalinn.is www.glerskalinn.is 557 5580      NULL          NULL     NULL            5          NULL false   false           
+        4 Sigurður      Hall             NULL      siggi              lovhf08     siggi@ispan.is       www.ispan.is       NULL          NULL          NULL     NULL            5          NULL false   false           
+        5 Hjörtur       Methúsalemsson   HM        hjortur            hann        NULL                 NULL               NULL          NULL          NULL     NULL            5          NULL false   false           
+        8 Birgitta      Kristinsdóttir   BK        birgitta                       birgitta@gler.is     www.ispan.is       545 4300      NULL          NULL     NULL            5          NULL false   false           
+        9 Ólafur        Ragnar Hilmarss. ORH       olir               sumar2004   olir@gler.is         www.ispan.is       545 4309      NULL          NULL     Sölumaður       4          NULL false   false           
+       10 Glerskálinn   Afgreiðsla       NULL      gsafgreidsla                   NULL                 NULL               557 5580      NULL          NULL     NULL            5          NULL false   false           
+       13 Finnur        Sigurðarson      FS        finnurg                                             www.ispan.is       545 4300      NULL          NULL     Sölumaður       4          NULL true    false           
+       14 Tinna         Finnsdóttir      TF        tinnaf                         tinnaf@gler.is       NULL               NULL          NULL          NULL     NULL            5          NULL false   false           
+       15 Guðmunda      Björk Hjaltest   GBH       gudmunda                                            www.ispan.is       545 4300      NULL          NULL                     5          NULL false   false           
+       16 Guðmundur     Erlendsson       GE        gke                            NULL                 NULL               NULL          NULL          NULL     NULL            4          NULL true    false           
+       20 Per Erik      Lorentzen        PEL       Per Erik Lorentzen                                                                                                          6          NULL false   false           
+       21 Bjørn         Breivik          BB        Bjørn                                                                                                                       6          NULL false   false           
+       22 Ragnar        Kristjansson     RK        ragnar                         NULL                 NULL               NULL          NULL          NULL     NULL            5          NULL false   false           
+       90 Glerskálinn   Glerskálinn      GG        Glerskalinn                    NULL                 NULL               NULL          NULL          NULL     NULL            3          NULL false   false           
+       98 Admin                          ADM       Admin              iomega                           NULL               NULL          NULL          NULL     NULL            5          NULL false   false           
+       99 Bruker                         BRK       Bruker             passord                          NULL               NULL          NULL          NULL     NULL            2          NULL false   false           
+
