@@ -81,6 +81,7 @@ public class FetchIspan {
 		} finally {
 			fechar();
 		}
+		// return msg when order is not existed 
 		return null;
 	}
 

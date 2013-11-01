@@ -35,7 +35,7 @@ import java.util.Set;
 
 public class MainWindow3 extends JFrame implements TableModelListener {
 
-	private JButton buttonSkraINN, buttonSkraUT, bPrint,bScan;
+	private JButton buttonSkraINN, buttonSkraUT, bPrint, bScan;
 	private JButton buttonSave;
 	private JButton buttonCancel;
 	private JTextField tfRekkaNumer;
@@ -191,18 +191,18 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 			public void actionPerformed(ActionEvent eSave) {
 
 				// TODO Auto-generated method stub
-				
-				//Integer.parseInt(tfpontunarNumerField.getText())!=11
-				int pontunUI =Integer.parseInt(tfpontunarNumerField.getText());
-              if (pontunUI ==11){
-            	  createGeymsla();
-            	  pontunDialog.setVisible(false);
-            	  
-              }else{
-				create();
-				
-				pontunDialog.setVisible(false);
-              }
+
+				// Integer.parseInt(tfpontunarNumerField.getText())!=11
+				int pontunUI = Integer.parseInt(tfpontunarNumerField.getText());
+				if (pontunUI == 11) {
+					createGeymsla();
+					pontunDialog.setVisible(false);
+
+				} else {
+					create();
+
+					pontunDialog.setVisible(false);
+				}
 			}
 
 		});
@@ -224,22 +224,73 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 			}
 		});
 		pForm.add(bPrint);
-		
+
 		bScan = new JButton("Scan");
 		bScan.addActionListener(new ActionListener() {
-			
+			// ATH pontun 11 geymsla ISPAN
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				StackReader sr = new StackReader();
-				sr.DeleteOldRecksInSQL();
+				Set<DTOPontunVasar> rekkarPairsFromCsv = sr.allarPontunarRecksOnly;
 				
-			
+				// TODO CHECK size of set ,IF  >0 CALL deletAndCreate mehod 	OR  convert into ArrayList<String>
+				// and then process data
+			//	if (rekkaEnterIsRight().)
+				deleteAndCreateExistedRekkarInLokalSQL(rekkarPairsFromCsv);
+
+			}
+
+			private void deleteAndCreateExistedRekkarInLokalSQL(
+					Set<DTOPontunVasar> allRecks) {
+				// TO DO: convert set to list
+				// TO DO careful here with loops flip it around
+				List<Entrence> entr = fetchGlerskalinn.readAll();
+				int rekkaFromCSV = 0;
+				int pontunarNumerCSV = 0;
+				int row = -1;
+				for (DTOPontunVasar r : allRecks) {
+					rekkaFromCSV = Integer.parseInt(r.getVasaN());
+					pontunarNumerCSV = Integer.parseInt(r.getPontunarN());
+					for (Entrence e : entr) {
+						row = row + 1;
+						int rekka = e.getRekkan();
+						if (rekka == rekkaFromCSV) {
+
+							// TRY TO USE UPDATE
+							fetchGlerskalinn.delete(rekkaFromCSV);
+
+							myTableModel.refreshWhenDelete(row);
+							createSqlOnScanPressFromCSV(pontunarNumerCSV,
+									rekkaFromCSV);
+
+						}
+					}
+
+					// TO DO create method for a sql query creation and call it when
+					// action event is triggered
+					createSqlOnScanPressFromCSV(pontunarNumerCSV, rekkaFromCSV);
+				}
+				System.out.println("Empty set test");
+
+			}
+
+			private void createSqlOnScanPressFromCSV(int csvPontun, int csvRekka) {
+
+				// attention empty values give a null point exception
 				
 				
-				
-				
-				
+				if (csvPontun > 0 && csvRekka > 0) {
+					Entrence tempentralldata = fetchispan.createReadNameIspan(
+							csvPontun, csvRekka);
+
+					myTableModel.refresh(tempentralldata);
+
+					cleanFields();
+				}else 	
+					System.out.println("Dialog here");
+				JOptionPane.showMessageDialog(pForm, "Enkin Rekki");
 			}
 		});
 		pForm.add(bScan);
@@ -322,7 +373,6 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 	}
 
 	private boolean isDobleEntryNOTPresent() {
-		
 
 		List<Entrence> entr = fetchGlerskalinn.readAll();
 		int row = -1;
@@ -339,25 +389,25 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 						JOptionPane.YES_NO_OPTION);
 
 				if (n == JOptionPane.YES_OPTION) {
-					// another if for creation of a GEYSLU in Ispan 
-					if (rekkaUI == 11){
-						 Date date = new Date();
+					// another if for creation of a GEYSLU in Ispan
+					if (rekkaUI == 11) {
+						Date date = new Date();
 
-							Format formatter = new SimpleDateFormat("dd.MM.yyyy");
-							String s = formatter.format(date);
-						
-						Entrence entrenseGeymsla = new Entrence("ISPAN GEYMSLA", 11, s, rekka, "5454300", "Smidjuvegur", "Kopavogur");
+						Format formatter = new SimpleDateFormat("dd.MM.yyyy");
+						String s = formatter.format(date);
+
+						Entrence entrenseGeymsla = new Entrence(
+								"ISPAN GEYMSLA", 11, s, rekka, "5454300",
+								"Smidjuvegur", "Kopavogur");
 						fetchGlerskalinn.delete(rekkaUI);
 						myTableModel.refreshWhenDelete(row);
 						fetchGlerskalinn.create(entrenseGeymsla);
 						myTableModel.refresh(entrenseGeymsla);
 						return false;
-					}
-					else	
-						
+					} else
 
-					// TRY TO USE UPDATE
-					fetchGlerskalinn.delete(rekkaUI);
+						// TRY TO USE UPDATE
+						fetchGlerskalinn.delete(rekkaUI);
 
 					myTableModel.refreshWhenDelete(row);
 
@@ -408,16 +458,16 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 			// + " skradur!");
 			myTableModel.refresh(tempentralldata);
 
-		cleanFields();
-		} 
-		
-		
+			cleanFields();
+		}
+
 		else {
 			cleanFields();
 		}
 
 	}
-	public boolean isNoDoubleForGeymsla(){
+
+	public boolean isNoDoubleForGeymsla() {
 		List<Entrence> entr = fetchGlerskalinn.readAll();
 		int row = -1;
 		for (Entrence e : entr) {
@@ -433,7 +483,6 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 						JOptionPane.YES_NO_OPTION);
 
 				if (n == JOptionPane.YES_OPTION) {
-					
 
 					// TRY TO USE UPDATE
 					fetchGlerskalinn.delete(rekkaUI);
@@ -465,28 +514,23 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		return true;
 	}
 
-		
-	
-	public void createGeymsla(){
-		if (isNoDoubleForGeymsla()){
-		int rekkaUI = Integer.parseInt(tfRekkaNumer.getText());
-		Date date = new Date();
+	public void createGeymsla() {
+		if (isNoDoubleForGeymsla()) {
+			int rekkaUI = Integer.parseInt(tfRekkaNumer.getText());
+			Date date = new Date();
 
 			Format formatter = new SimpleDateFormat("dd.MM.yyyy");
 			String s = formatter.format(date);
-		
-		Entrence entrenseGeymsla = new Entrence("ISPAN GEYMSLA", 11, s, rekkaUI, "5454300", "Smidjuvegur", "Kopavogur");
-		
-		fetchGlerskalinn.create(entrenseGeymsla);
-		myTableModel.refresh(entrenseGeymsla);
-		}
-		else{
+
+			Entrence entrenseGeymsla = new Entrence("ISPAN GEYMSLA", 11, s,
+					rekkaUI, "5454300", "Smidjuvegur", "Kopavogur");
+
+			fetchGlerskalinn.create(entrenseGeymsla);
+			myTableModel.refresh(entrenseGeymsla);
+		} else {
 			cleanFields();
 		}
-	
-	
-		
-		
+
 	}
 
 	class MyTableModel extends AbstractTableModel {
@@ -548,14 +592,14 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		public void setValueAt(Object valTableDate, int row, int col) {
 			String date = valTableDate.toString();
 			if (col == 2) {
-			//	entlist.get(row).setDagsetning(date);
+				// entlist.get(row).setDagsetning(date);
 			}
 
 			// Notify the world about the change
 			// fireTableDataChanged();
 
-			//TableModelEvent event = new TableModelEvent(this, row, row, col);
-		//	fireTableChanged(event);
+			// TableModelEvent event = new TableModelEvent(this, row, row, col);
+			// fireTableChanged(event);
 		}
 
 		public void refresh(Entrence tempentralldata) {
@@ -572,22 +616,23 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 	}
 
 	@Override
-	public void tableChanged(TableModelEvent eventDataChanged) {}
-		// TODO Auto-generated method stub
+	public void tableChanged(TableModelEvent eventDataChanged) {
+	}
 
-		/*	 int row = eventDataChanged.getFirstRow();
-			 int column =eventDataChanged.getColumn(); 
-			 MyTableModel model = (MyTableModel) eventDataChanged.getSource(); 
-			 String columnName = model.getColumnName(column); 
-			 Object dataChanged = model.getValueAt(row, column);
-			 Object rekkaN = model.getValueAt(row, 3);
-			 int rekkaToSQL = Integer.parseInt(rekkaN.toString());
-			 String data = dataChanged.toString();
-			
-			 
-			 fetchGlerskalinn.update(data, rekkaToSQL); }
-*/
-	
+	// TODO Auto-generated method stub
+
+	/*
+	 * int row = eventDataChanged.getFirstRow(); int column
+	 * =eventDataChanged.getColumn(); MyTableModel model = (MyTableModel)
+	 * eventDataChanged.getSource(); String columnName =
+	 * model.getColumnName(column); Object dataChanged = model.getValueAt(row,
+	 * column); Object rekkaN = model.getValueAt(row, 3); int rekkaToSQL =
+	 * Integer.parseInt(rekkaN.toString()); String data =
+	 * dataChanged.toString();
+	 * 
+	 * 
+	 * fetchGlerskalinn.update(data, rekkaToSQL); }
+	 */
 
 	/*
 	 * @Override public void tableChanged(TableModelEvent e) { // TODO
@@ -612,5 +657,5 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		}
 
 	}
-	
+
 }
