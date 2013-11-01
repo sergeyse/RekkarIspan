@@ -15,17 +15,21 @@ import com.crud.model.Entrence;
 public class FetchIspan {
 
 	// refactor for MS Sql
-	private final String URL = "jdbc:sqlserver://ispansql:1433;databaseName=PPM_GLERSKALINN";
-	private final String NOME = "sergey";
-	private final String PAS = "sql.sergey";
+	//private final String URL = "jdbc:sqlserver://ispansql:1433;databaseName=PPM_GLERSKALINN";
+	//private final String NOME = "sergey";
+	//private final String PAS = "sql.sergey";
+	private final String URL = "jdbc:mysql://localhost:3306/homedb";
+	private final String NAME = "root";
+//	private final String PASS = "123";
+	private final String PASS = "";
 
 	private Connection con;
 	private Statement comando;
 
 	public void connect() {
 		try {
-			con = ConnectionFactory.conexao(URL, NOME, PAS,
-					ConnectionFactory.MSSQL);
+			con = ConnectionFactory.conexao(URL, NAME, PASS,
+					ConnectionFactory.MYSQL);
 			comando = con.createStatement();
 			System.out.println("Connected");
 		} catch (ClassNotFoundException e) {
@@ -60,7 +64,8 @@ public class FetchIspan {
 		
 		// if pontunn.length < 6 show message
 		try {
-			rs = comando.executeQuery("SELECT Navn,Gateadresse,Poststed,Telefon  FROM dbo.tabOrdre  WHERE Ordrenummer = "+ pontunN + ";" );
+			// remember to use tabordre not taborder
+			rs = comando.executeQuery("SELECT Navn,Gateadresse,Poststed,Telefon  FROM taborder  WHERE Ordrenummer = "+ pontunN + ";" );
 	
 			while (rs.next()) {
 				temp =  new Entrence(rs.getString("Navn"), pontunN, s, rekkan, rs.getString("Telefon"), rs.getString("Gateadresse"), rs.getString("Poststed"));

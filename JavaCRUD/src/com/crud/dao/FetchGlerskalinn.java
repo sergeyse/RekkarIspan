@@ -14,9 +14,11 @@ import com.crud.dao.banco.ConnectionFactory;
 import com.crud.model.Entrence;
 
 public class FetchGlerskalinn {
-	private final String URL = "jdbc:mysql://localhost:3306/CRUD";
+//	private final String URL = "jdbc:mysql://localhost:3306/CRUD";
+	private final String URL = "jdbc:mysql://localhost:3306/homedb";
 	private final String NAME = "root";
-	private final String PASS = "123";
+//	private final String PASS = "123";
+	private final String PASS = "";
 
 	private Connection con;
 	private Statement comand;
@@ -24,6 +26,8 @@ public class FetchGlerskalinn {
 
 	public void conectar() {
 		try {
+		/*	con = ConnectionFactory.conexao(URL, NAME, PASS,
+					ConnectionFactory.MYSQL);*/
 			con = ConnectionFactory.conexao(URL, NAME, PASS,
 					ConnectionFactory.MYSQL);
 			comand = con.createStatement();

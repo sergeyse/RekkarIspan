@@ -14,6 +14,9 @@ import com.crud.gui.MainWindow3.MyTableModel;
 import com.crud.model.Entrence;
 import com.sun.java.swing.plaf.windows.resources.windows;
 
+import csv.DTOPontunVasar;
+import csv.StackReader;
+
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
@@ -28,10 +31,11 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class MainWindow3 extends JFrame implements TableModelListener {
 
-	private JButton buttonSkraINN, buttonSkraUT, bPrint;
+	private JButton buttonSkraINN, buttonSkraUT, bPrint,bScan;
 	private JButton buttonSave;
 	private JButton buttonCancel;
 	private JTextField tfRekkaNumer;
@@ -220,6 +224,25 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 			}
 		});
 		pForm.add(bPrint);
+		
+		bScan = new JButton("Scan");
+		bScan.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				StackReader sr = new StackReader();
+				sr.DeleteOldRecksInSQL();
+				
+			
+				
+				
+				
+				
+				
+			}
+		});
+		pForm.add(bScan);
 
 		/*
 		 * BufferedImage myPicture = null; try { myPicture = ImageIO.read(new
@@ -580,7 +603,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 
 		int rekka = Integer.parseInt(tfRekkaNumer.getText());
 
-		if (rekka > 0 && rekka < 350) {
+		if (rekka > 0 && rekka < 2999) {
 			return true;
 		} else {
 			JOptionPane.showMessageDialog(this, " ATH!Athuga Rekka numer !",
