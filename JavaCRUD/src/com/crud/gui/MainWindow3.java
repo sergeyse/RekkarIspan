@@ -102,30 +102,30 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 						int rekkaUI = Integer.parseInt(tfRekkaNumer.getText());
 						int rekka = e.getRekkan();
 						if (rekka == rekkaUI) {
-
-							int n = JOptionPane.showConfirmDialog(null,
+                           // this dialog is slowing us down :-)
+						/*	int n = JOptionPane.showConfirmDialog(null,
 									"ATH Rekka  " + tfRekkaNumer.getText()
 
 									+ " Verdur\n " + "Fjarlaegdur !", null,
 									JOptionPane.YES_NO_OPTION);
 
-							if (n == JOptionPane.YES_OPTION) {
+							if (n == JOptionPane.YES_OPTION) {*/
 
 								// TRY TO USE UPDATE
 								fetchGlerskalinn.delete(rekkaUI);
 
 								myTableModel.refreshWhenDelete(row);
 
-							}
+						//	}
 
-							else if (n == JOptionPane.NO_OPTION) {
+							/*else if (n == JOptionPane.NO_OPTION) {
 								System.out.println("pressed NO ");
 								// recursion !!!
 
 								// refreshTable();
 								// cleanFields();
 
-							}
+							}*/
 						}
 					}
 
@@ -234,27 +234,28 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 				// TODO Auto-generated method stub
 				StackReader sr = new StackReader();
 				Set<DTOPontunVasar> rekkarPairsFromCsv = sr.allarPontunarRecksOnly;
-				
-				// TODO CHECK size of set ,IF  >0 CALL deletAndCreate mehod 	OR  convert into ArrayList<String>
-				// and then process data
-			//	if (rekkaEnterIsRight().)
+
+				// TODO CHECK size of set ,IF >0 CALL deletAndCreate mehod OR
+				// if (rekkaEnterIsRight().)
 				deleteAndCreateExistedRekkarInLokalSQL(rekkarPairsFromCsv);
 
 			}
 
 			private void deleteAndCreateExistedRekkarInLokalSQL(
 					Set<DTOPontunVasar> allRecks) {
-				// TO DO: convert set to list
-				// TO DO careful here with loops flip it around
+				
+				// TO DO careful here with loops flip it around order dose
+				// matter ?
 				List<Entrence> entr = fetchGlerskalinn.readAll();
 				int rekkaFromCSV = 0;
 				int pontunarNumerCSV = 0;
 				int row = -1;
-				for (DTOPontunVasar r : allRecks) {
-					rekkaFromCSV = Integer.parseInt(r.getVasaN());
-					pontunarNumerCSV = Integer.parseInt(r.getPontunarN());
-					for (Entrence e : entr) {
-						row = row + 1;
+				for (Entrence e : entr) {
+					row = row + 1;
+
+					for (DTOPontunVasar r : allRecks) {
+						rekkaFromCSV = Integer.parseInt(r.getVasaN());
+						pontunarNumerCSV = Integer.parseInt(r.getPontunarN());
 						int rekka = e.getRekkan();
 						if (rekka == rekkaFromCSV) {
 
@@ -262,25 +263,32 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 							fetchGlerskalinn.delete(rekkaFromCSV);
 
 							myTableModel.refreshWhenDelete(row);
-							createSqlOnScanPressFromCSV(pontunarNumerCSV,
-									rekkaFromCSV);
+							// we removed a row and need to update table . now is one row less in a table so out of bound exception not happen 
+							row=row -1;
+							/*createSqlOnScanPressFromCSV(pontunarNumerCSV,
+									rekkaFromCSV);*/
 
-						}
+						} 
 					}
 
-					// TO DO create method for a sql query creation and call it when
+					// TO DO create method for a sql query creation and call it
+					// when
 					// action event is triggered
-					createSqlOnScanPressFromCSV(pontunarNumerCSV, rekkaFromCSV);
 				}
+				
+				for (DTOPontunVasar re  :allRecks){
 				System.out.println("Empty set test");
+				rekkaFromCSV = Integer.parseInt(re.getVasaN());
+				pontunarNumerCSV = Integer.parseInt(re.getPontunarN());
+				createSqlOnScanPressFromCSV(pontunarNumerCSV, rekkaFromCSV);
+				}
 
 			}
 
 			private void createSqlOnScanPressFromCSV(int csvPontun, int csvRekka) {
 
 				// attention empty values give a null point exception
-				
-				
+
 				if (csvPontun > 0 && csvRekka > 0) {
 					Entrence tempentralldata = fetchispan.createReadNameIspan(
 							csvPontun, csvRekka);
@@ -288,9 +296,9 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 					myTableModel.refresh(tempentralldata);
 
 					cleanFields();
-				}else 	
+				} else
 					System.out.println("Dialog here");
-				JOptionPane.showMessageDialog(pForm, "Enkin Rekki");
+				// JOptionPane.showMessageDialog(pForm, "Enkin Rekki");
 			}
 		});
 		pForm.add(bScan);
@@ -333,10 +341,10 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 				label.setHorizontalAlignment(JLabel.RIGHT);
 
 				// display that more than $100 in red
-				if ((Integer) value <= 99) {
+				if ((Integer) value <= 999) {
 					label.setForeground(Color.RED);
-				} else if ((Integer) value >= 100
-						&& Integer.parseInt(value.toString()) <= 199) {
+				} else if ((Integer) value >= 1000
+						&& Integer.parseInt(value.toString()) <= 1999) {
 					label.setForeground(Color.GREEN);
 				} else {
 
@@ -608,7 +616,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		}
 
 		public void refreshWhenDelete(int row) {
-			entlist.remove(row);
+			entlist.remove(row);//fetchGlerskalinn read all 
 			// fireTableDataChanged();
 			fireTableRowsDeleted(row, row);
 		}
@@ -620,7 +628,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 	}
 
 	// TODO Auto-generated method stub
-
+ 
 	/*
 	 * int row = eventDataChanged.getFirstRow(); int column
 	 * =eventDataChanged.getColumn(); MyTableModel model = (MyTableModel)

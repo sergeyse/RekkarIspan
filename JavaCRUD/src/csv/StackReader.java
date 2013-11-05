@@ -58,8 +58,8 @@ public class StackReader {
 					 */
 					// System.out.print(item + "\t");
 				}
-				
-				 if ( Integer.parseInt(vasaN) <= 2999){
+				  // TO DO also check the length here 
+				 if ( Integer.parseInt(vasaN) <= 2999 ){
 				temp = new DTOPontunVasar(pontunarN, vasaN);
 				allarPontunarRecksOnly.add(temp);
 				System.out.println(); // Print the data line.

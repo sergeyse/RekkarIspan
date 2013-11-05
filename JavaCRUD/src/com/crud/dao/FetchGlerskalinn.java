@@ -68,7 +68,12 @@ public class FetchGlerskalinn {
 					+ entrfromispan.getPostn() + "')");
 		} catch (SQLException e) {
 			System.err.println("Error entring user : " + e.getMessage());
-		} finally {
+		}
+		catch ( Exception e){
+			System.out.println("No such entry in db ");
+		}
+				
+				finally {
 			fechar();
 		}
 	}
@@ -138,7 +143,7 @@ public class FetchGlerskalinn {
 					+ s
 					+ "', '"
 					+ rekka
-					+ "', '5454300', 'Smiðjuvegi 7', 'Kop 200')");
+					+ "', '5454300', 'Smiï¿½juvegi 7', 'Kop 200')");
 		} catch (SQLException e) {
 			System.err.println("Error entring user : " + e.getMessage());
 		} finally {
