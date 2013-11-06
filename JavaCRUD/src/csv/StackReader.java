@@ -17,7 +17,7 @@ import java.util.Set;
 
 import com.crud.dao.FetchGlerskalinn;
 
-public class StackReader {
+public class StackReader { 
 
 	private static BufferedReader cSVFileReader;
 	// private static BufferedWriter cSVFileWriter;

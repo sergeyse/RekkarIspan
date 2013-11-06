@@ -8,6 +8,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import mailer.MailSender;
+
 import com.crud.dao.FetchGlerskalinn;
 import com.crud.dao.FetchIspan;
 import com.crud.gui.MainWindow3.MyTableModel;
@@ -277,10 +279,16 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 				}
 				
 				for (DTOPontunVasar re  :allRecks){
-				System.out.println("Empty set test");
-				rekkaFromCSV = Integer.parseInt(re.getVasaN());
-				pontunarNumerCSV = Integer.parseInt(re.getPontunarN());
-				createSqlOnScanPressFromCSV(pontunarNumerCSV, rekkaFromCSV);
+				System.out.println("Starting loop for recording from hashset ");
+				int rekkaFromCSV2 = Integer.parseInt(re.getVasaN());
+			     int 	pontunarNumerCSV2 = Integer.parseInt(re.getPontunarN());
+				createSqlOnScanPressFromCSV(pontunarNumerCSV2, rekkaFromCSV2);
+				}
+				
+				if (allRecks.size()>0){
+					
+					MailSender ms = new MailSender(allRecks);
+					ms.sendMailConfirmed();
 				}
 
 			}
