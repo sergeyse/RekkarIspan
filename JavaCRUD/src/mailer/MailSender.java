@@ -57,7 +57,7 @@ public 	MailSender(Set<DTOPontunVasar> pairsToMailOut) {
 
 			String pontun = pair.getPontunarN();
 			String rekka = pair.getVasaN();
-			pairsMessage = pontun + " --- " + rekka + " ; " + "\n"
+			pairsMessage = "<br>    "+pontun + " --- " + rekka + " ;      " + "</br>"
 					+ pairsMessage;
 		}
 
@@ -115,8 +115,8 @@ public 	MailSender(Set<DTOPontunVasar> pairsToMailOut) {
 		}
 		try {
 			msg.setBody(MessageBody
-					.getMessageBodyFromText("Bъin aр skэrsla н dag    -  "
-							+ pairsMessage + "  MK \r\n         Lagerpъkinn."));
+					.getMessageBodyFromText("Buinn að setja á rekka. <br> </br>       "
+							+ pairsMessage + "  MK <br>     </br>  Lagerpúkinn.    "));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
