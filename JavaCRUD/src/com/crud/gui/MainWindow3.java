@@ -53,8 +53,10 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 	MyTableModel myTableModel;
 
 	// Constructor
-	public MainWindow3() {
-		super("Rekkar Glerskalinn EHF.");
+	public MainWindow3( String email ) {
+		super("Rekkar IspanHF ver. 0.2");
+		
+		this.email = email;
 
 		try {
 			UIManager
@@ -287,7 +289,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 				
 				if (allRecks.size()>0){
 					
-					MailSender ms = new MailSender(allRecks);
+					MailSender ms = new MailSender(allRecks, email);
 					ms.sendMailConfirmed();
 				}
 

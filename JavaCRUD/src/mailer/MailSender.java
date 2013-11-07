@@ -30,10 +30,12 @@ import microsoft.exchange.webservices.data.WellKnownFolderName;
 public class MailSender {
 
 	Set<DTOPontunVasar> pairsToMailOut;
+	String email ;
 
-public 	MailSender(Set<DTOPontunVasar> pairsToMailOut) {
+public 	MailSender(Set<DTOPontunVasar> pairsToMailOut,String email) {
 
 		this.pairsToMailOut = pairsToMailOut;
+		this.email = email;
 	}
 
 	/**
@@ -115,14 +117,14 @@ public 	MailSender(Set<DTOPontunVasar> pairsToMailOut) {
 		}
 		try {
 			msg.setBody(MessageBody
-					.getMessageBodyFromText("Buinn að setja á rekka. <br> </br>       "
+					.getMessageBodyFromText("Buinn að setja á rekka i dag			" +s+" <br> </br>       "
 							+ pairsMessage + "  MK <br>     </br>  Lagerpúkinn.    "));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			msg.getToRecipients().add("sergiy@glerskalinn.is");
+			msg.getToRecipients().add(email+"@glerskalinn.is");
 		} catch (ServiceLocalException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -95,11 +95,11 @@ public class FetchIspan {
 		}
 		// return msg when order is not existed
 		//return null;
-		tempNullPontun = new Entrence("Not Found", 01, s, rekkan, "5555555", "gata", "postn");
+		tempNullPontun = new Entrence("Not Found in DB", 01, s, rekkan, "5555555", "gata", "postn");
 		FetchGlerskalinn f = new FetchGlerskalinn();
 		f.create(tempNullPontun);
 		
-		return tempNullPontun = new Entrence("Not Found", 01, s, rekkan, "5555555", "gata", "postn");
+		return tempNullPontun = new Entrence("Not Found in DB", 01, s, rekkan, "5555555", "gata", "postn");
 		
 		
 	}

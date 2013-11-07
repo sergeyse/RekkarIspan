@@ -11,7 +11,7 @@ public class app {
 		     System.out.println("\nUsage: java reciver'sEmail");
 		     System.exit(0);
 		   }
-		MainWindow3 mainWindow3 = new MainWindow3();
+		MainWindow3 mainWindow3 = new MainWindow3(args[0]);
 	     mainWindow3.setVisible(true);
 	     mainWindow3.setSize(700, 700);
 		mainWindow3.setResizable(true);
