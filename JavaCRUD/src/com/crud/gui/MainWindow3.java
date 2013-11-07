@@ -52,7 +52,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 	FetchIspan fetchispan;
 	FetchGlerskalinn fetchGlerskalinn;
 	MyTableModel myTableModel;
-	private final int orderGeymslaIspan = 391000;
+	private final String orderGeymslaIspan = "391000";
 
 	// Constructor
 	public MainWindow3(String email) {
@@ -304,7 +304,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 
 					for (DTOPontunVasar rk : allRecks) {
 
-						if (Integer.parseInt(rk.getPontunarN()) == orderGeymslaIspan) {
+						if ( orderGeymslaIspan.equals(rk.getPontunarN())) {
 
 						} else {
 							temp = new DTOPontunVasar(rk.getPontunarN(), rk
@@ -316,7 +316,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 					}
 					if (recksToEmailWithoutGeymsla.size()>0){// we check if any of orders, which suppose to  go out, are left in collection/
 
-					MailSender ms = new MailSender(allRecks, email);
+					MailSender ms = new MailSender(recksToEmailWithoutGeymsla, email);
 					ms.sendMailConfirmed();
 					}
 				}
