@@ -47,7 +47,7 @@ public 	MailSender(Set<DTOPontunVasar> pairsToMailOut,String email) {
 		ExchangeService service = new ExchangeService(
 				ExchangeVersion.Exchange2010_SP2);
 
-		ExchangeCredentials credentials = new WebCredentials("gsafgreidsla", "");
+		ExchangeCredentials credentials = new WebCredentials("verksmidja", "verksmidja");
 		service.setCredentials(credentials);
 
 		Date date = new Date();
@@ -124,7 +124,7 @@ public 	MailSender(Set<DTOPontunVasar> pairsToMailOut,String email) {
 			e.printStackTrace();
 		}
 		try {
-			msg.getToRecipients().add(email+"@glerskalinn.is");
+			msg.getToRecipients().add(email+"@ispan.is");
 		} catch (ServiceLocalException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
