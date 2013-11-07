@@ -47,7 +47,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 	private JScrollPane spTable;
 	private JTable tTable;
 	private JLabel rekkaNumerLable, logoLabel, pontunarNumerLabel;
-
+    private String email;
 	FetchIspan fetchispan;
 	FetchGlerskalinn fetchGlerskalinn;
 	MyTableModel myTableModel;
