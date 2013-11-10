@@ -14,11 +14,11 @@ import com.crud.dao.banco.ConnectionFactory;
 import com.crud.model.Entrence;
 
 public class FetchGlerskalinn {
-//	private final String URL = "jdbc:mysql://localhost:3306/CRUD";
-	private final String URL = "jdbc:mysql://192.168.81.205:3306/crud2";
+	private final String URL = "jdbc:mysql://localhost:3306/CRUD";
+//	private final String URL = "jdbc:mysql://192.168.81.205:3306/crud2";
 	private final String NAME = "javauser";
-//	private final String PASS = "123";
-	private final String PASS = "1234";
+    private final String PASS = "123";
+//	private final String PASS = "1234";
 
 	private Connection con;
 	private Statement comand;
@@ -130,26 +130,22 @@ public class FetchGlerskalinn {
 		
 		
 	}
-/*	public void createGeymsla(int pontun,int rekka) {
-		Date date = new Date();
-
-		Format formatter = new SimpleDateFormat("dd.MM.yyyy");
-		String s = formatter.format(date);
+	public void createMSG(Entrence entrfromispan ,int rekka) {
 		conectar();
 		try {
-			comand.execute("INSERT INTO JavaCRUD2(nafn,pontun,dagsetning,rekka ,siminn, gata, postn) VALUES('GEYMSLA', '"
-					+ pontun
-					+ "', '"
-					+ s
-					+ "', '"
-					+ rekka
-					+ "', '5454300', 'Smi�juvegi 7', 'Kop 200')");
+			comand.execute("UPDATE JavaCRUD2  SET  ath ="
+					+ entrfromispan.getNafn()+ "WHERE  rekka = "+ rekka ";");
 		} catch (SQLException e) {
 			System.err.println("Error entring user : " + e.getMessage());
-		} finally {
+		}
+		catch ( Exception e){
+			System.out.println("No such entry in db ");
+		}
+				
+				finally {
 			fechar();
 		}
-	}*/
+	}
 
 	
 }
