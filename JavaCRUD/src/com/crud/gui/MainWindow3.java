@@ -399,7 +399,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		// column size
 
 		TableColumn columnSize = null;
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 8; i++) {
 			columnSize = tTable.getColumnModel().getColumn(i);
 			if (i == 0) {
 				columnSize.setPreferredWidth(150); // third column is bigger
@@ -407,7 +407,9 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 				columnSize.setPreferredWidth(60);
 			} else if (i == 3) {
 				columnSize.setPreferredWidth(50);
-			} else {
+			}  else if (i == 7) {
+				columnSize.setPreferredWidth(150);
+			}else {
 				columnSize.setPreferredWidth(70);
 			}
 		}
@@ -585,7 +587,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		List<Entrence> entlist = fetchGlerskalinn.readAll();
 
 		String[] orderColNames = { "Nafn", "Pontun", "Dagsetning", "Rekka",
-				"Siminn", "Gata", "PostN" };
+				"Siminn", "Gata", "PostN","ATH ! " };
 
 		@Override
 		public int getRowCount() {
@@ -596,7 +598,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		@Override
 		public int getColumnCount() {
 			// TODO Auto-generated method stub
-			return 7;
+			return 8;
 		}
 		 public Class getColumnClass(int column) {
              switch (column) {
@@ -613,6 +615,8 @@ public class MainWindow3 extends JFrame implements TableModelListener {
                  case 5:
                      return String.class;
                  case 6:
+                     return String.class;
+                 case 7:
                      return String.class;
                
                  default:
@@ -638,6 +642,8 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 				return entlist.get(row).getGata();
 			case 6:
 				return entlist.get(row).getPostn();
+			case 7:
+				return entlist.get(row).getMsgATH();
 			default:
 				return "";
 			}
@@ -649,7 +655,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 
 		public boolean isCellEditable(int row, int col) {
 
-			if (col == 2) {
+			if (col == 7) {
 				return true;
 			} else {
 				return false;
@@ -657,17 +663,17 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		}
 
 		// Update the model when the use changes the quantity
-		public void setValueAt(Object valTableDate, int row, int col) {
-			String date = valTableDate.toString();
-			if (col == 2) {
-				// entlist.get(row).setDagsetning(date);
+		public void setValueAt(Object writtenMsg, int row, int col) {
+			String msgFromtable = writtenMsg.toString();
+			if (col == 7) {
+			 entlist.get(row).setMsgATH(msgFromtable);
 			}
 
 			// Notify the world about the change
 			// fireTableDataChanged();
 
-			// TableModelEvent event = new TableModelEvent(this, row, row, col);
-			// fireTableChanged(event);
+			 TableModelEvent event = new TableModelEvent(this, row, row, col);
+			 fireTableChanged(event);
 		}
 
 		public void refresh(Entrence tempentralldata) {
@@ -685,22 +691,26 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 
 	@Override
 	public void tableChanged(TableModelEvent eventDataChanged) {
-	}
+	
 
 	// TODO Auto-generated method stub
 
-	/*
-	 * int row = eventDataChanged.getFirstRow(); int column
-	 * =eventDataChanged.getColumn(); MyTableModel model = (MyTableModel)
-	 * eventDataChanged.getSource(); String columnName =
-	 * model.getColumnName(column); Object dataChanged = model.getValueAt(row,
-	 * column); Object rekkaN = model.getValueAt(row, 3); int rekkaToSQL =
-	 * Integer.parseInt(rekkaN.toString()); String data =
-	 * dataChanged.toString();
-	 * 
-	 * 
-	 * fetchGlerskalinn.update(data, rekkaToSQL); }
-	 */
+
+	  int row = eventDataChanged.getFirstRow(); 
+	  int column =eventDataChanged.getColumn();
+	  MyTableModel model = (MyTableModel)eventDataChanged.getSource(); 
+	//  String columnName = model.getColumnName(column);// hardcoded in our case - "ath" name
+	  Object dataChanged = model.getValueAt(row,column);
+	  Object rekkaN = model.getValueAt(row, 3);
+	//  int rekkaNoSendToSQL =Integer.parseInt(rekkaN.toString());
+	  int rekkaNoSendToSQL = (int) rekkaN;
+	  String data = dataChanged.toString();
+	  
+	  
+	 fetchGlerskalinn.createMSG(data, rekkaNoSendToSQL);
+	 
+	}
+	 
 
 	/*
 	 * @Override public void tableChanged(TableModelEvent e) { // TODO

@@ -96,7 +96,7 @@ public class FetchGlerskalinn {
 				temp = new Entrence(rs.getString("nafn"), rs.getInt("pontun"),
 						rs.getString("dagsetning"), rs.getInt("rekka"),
 						rs.getString("siminn"), rs.getString("gata"),
-						rs.getString("postn"));
+						rs.getString("postn"),rs.getString("ath"));
 				list.add(temp);
 			}
 			return list;
@@ -137,11 +137,11 @@ public class FetchGlerskalinn {
 		
 		
 	}
-	public void createMSG(Entrence entrfromispan ,int rekka) {
+	public void createMSG(String msgFromtable ,int rekka) {
 		conectar();
 		try {
-			comand.execute("UPDATE JavaCRUD2  SET  ath ="
-					+ entrfromispan.getNafn()+ "WHERE  rekka = "+ rekka ";");
+			comand.execute("UPDATE JavaCRUD2  SET  ath ='"
+					+ msgFromtable+ "' WHERE  rekka = '"+ rekka+ "';");
 		} catch (SQLException e) {
 			System.err.println("Error entring user : " + e.getMessage());
 		}

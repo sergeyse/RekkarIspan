@@ -38,9 +38,9 @@ public class Entrence {
 
 	}
 
-	public Entrence(int id, String nafn, int pontun, String dagsetning,
+	public Entrence( String nafn, int pontun, String dagsetning,
 			int rekkan, String siminn, String gata, String postn, String msgATH) {
-		this.id = id;
+	
 		this.nafn = nafn;
 		this.pontun = pontun;
 		this.dagsetning = dagsetning;
