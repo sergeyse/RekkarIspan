@@ -598,6 +598,27 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 			// TODO Auto-generated method stub
 			return 7;
 		}
+		 public Class getColumnClass(int column) {
+             switch (column) {
+                 case 0:
+                     return String.class;
+                 case 1:
+                     return Integer.class;
+                 case 2:
+                     return String.class;
+                 case 3:
+                     return Integer.class;
+                 case 4:
+                     return String.class;
+                 case 5:
+                     return String.class;
+                 case 6:
+                     return String.class;
+               
+                 default:
+                     return String.class;
+             }
+         }
 
 		@Override
 		public Object getValueAt(int row, int col) {
