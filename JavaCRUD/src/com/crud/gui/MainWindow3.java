@@ -8,6 +8,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import printing.OutputPrinter;
+
 import mailer.MailSender;
 
 import com.crud.dao.FetchGlerskalinn;
@@ -25,6 +27,8 @@ import java.awt.BorderLayout;
 import java.awt.Label;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.*;
@@ -38,7 +42,7 @@ import java.util.Set;
 
 public class MainWindow3 extends JFrame implements TableModelListener {
 
-	private JButton buttonSkraINN, buttonSkraUT, bPrint, bScan;
+	private JButton buttonSkraINN, buttonSkraUT, bPrint, bScan, bTestPr;
 	private JButton buttonSave;
 	private JButton buttonCancel;
 	private JTextField tfRekkaNumer;
@@ -48,17 +52,18 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 	private JScrollPane spTable;
 	private JTable tTable;
 	private JLabel rekkaNumerLable, logoLabel, pontunarNumerLabel;
-	private String email;
+	//private String email;
 	FetchIspan fetchispan;
 	FetchGlerskalinn fetchGlerskalinn;
 	MyTableModel myTableModel;
 	private final String orderGeymslaIspan = "391000";
 
 	// Constructor
-	public MainWindow3(String email) {
+//	public MainWindow3(String email) {
+	public MainWindow3(){
 		super("Rekkar IspanHF ver. 0.2");
 
-		this.email = email;
+	//	this.email = email;
 
 		try {
 			UIManager
@@ -109,32 +114,33 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 						int rekka = e.getRekkan();
 						if (rekka == rekkaUI) {
 							// this dialog is slowing us down :-)
-							/*
-							 * int n = JOptionPane.showConfirmDialog(null,
-							 * "ATH Rekka  " + tfRekkaNumer.getText()
-							 * 
-							 * + " Verdur\n " + "Fjarlaegdur !", null,
-							 * JOptionPane.YES_NO_OPTION);
-							 * 
-							 * if (n == JOptionPane.YES_OPTION) {
-							 */
+							
+							 int n = JOptionPane.showConfirmDialog(null,
+							  "ATH Rekka  " + tfRekkaNumer.getText()
+							  
+							  + " Verdur\n " + "Fjarlaegdur !", null,
+							  JOptionPane.YES_NO_OPTION);
+							  
+							  if (n == JOptionPane.YES_OPTION) {
+							 
 
 							// TRY TO USE UPDATE
 							fetchGlerskalinn.delete(rekkaUI);
 
 							myTableModel.refreshWhenDelete(row);
 
-							// }
+							 }
 
-							/*
-							 * else if (n == JOptionPane.NO_OPTION) {
-							 * System.out.println("pressed NO "); // recursion
-							 * !!!
-							 * 
-							 * // refreshTable(); // cleanFields();
-							 * 
-							 * }
-							 */
+							
+							  else if (n == JOptionPane.NO_OPTION) {
+							  System.out.println("pressed NO "); // recursion
+						
+							  
+							 // refreshTable();
+							 cleanFields();
+							  
+							  }
+							 
 						}
 					}
 
@@ -160,7 +166,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		buttonSave = new JButton("Save");
 		buttonCancel = new JButton("Cancel");
 
-		pontunarNumerLabel = new JLabel("Pontunar N:");
+		pontunarNumerLabel = new JLabel("Pontunar N:(11-GEYMSLA)");
 		tfpontunarNumerField = new JTextField();
 		JLabel emptyLable = new JLabel("");
 		p1.add(pontunarNumerLabel);
@@ -217,6 +223,11 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		});
 
 		pForm.add(buttonSkraUT);
+		
+		
+		
+		
+		
 
 		bPrint = new JButton("Print");
 		bPrint.addActionListener(new ActionListener() {
@@ -233,6 +244,18 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 			}
 		});
 		pForm.add(bPrint);
+		
+		bTestPr = new JButton("Test");
+		bTestPr.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				printToPrinter();
+			}
+		});
+		pForm.add(bTestPr);
+		
 
 		bScan = new JButton("Scan");
 		bScan.addActionListener(new ActionListener() {
@@ -316,8 +339,8 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 					}
 					if (recksToEmailWithoutGeymsla.size()>0){// we check if any of orders, which suppose to  go out, are left in collection/
 
-					MailSender ms = new MailSender(recksToEmailWithoutGeymsla, email);
-					ms.sendMailConfirmed();
+				/*	MailSender ms = new MailSender(recksToEmailWithoutGeymsla, email);
+					ms.sendMailConfirmed();*/
 					}
 				}
 
@@ -340,7 +363,9 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 				// JOptionPane.showMessageDialog(pForm, "Enkin Rekki");
 			}
 		});
-		pForm.add(bScan);
+		
+		// remove  possibility to get entrance from CSV 
+		//pForm.add(bScan);
 
 		/*
 		 * BufferedImage myPicture = null; try { myPicture = ImageIO.read(new
@@ -734,6 +759,25 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 			return false;
 		}
 
+	}
+	private void printToPrinter()
+	{
+	   // String printData = CalculationTextArea.getText() + "\n" + SpecificTextArea.getText();
+		   String printData = "Some text \n Some other text" ;
+	    PrinterJob job = PrinterJob.getPrinterJob();
+	    job.setPrintable(new OutputPrinter(printData));
+	    boolean doPrint = job.printDialog();
+	    if (doPrint)
+	    { 
+	        try 
+	        {
+	            job.print();
+	        }
+	        catch (PrinterException e)
+	        {
+	            // Print job did not complete.
+	        }
+	    }
 	}
 
 }

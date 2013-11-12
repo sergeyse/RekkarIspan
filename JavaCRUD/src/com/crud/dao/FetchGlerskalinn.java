@@ -19,13 +19,13 @@ public class FetchGlerskalinn {
 	//private final String NAME = "javauser";
   //  private final String PASS = "123";
 //	private final String PASS = "1234";
-	private final String URL = "jdbc:mysql://localhost:3306/homedb";
-	//private final String URL = "jdbc:mysql://192.168.81.205:3306/crud2";
-	//private final String NAME = "javauser";
+	/*private final String URL = "jdbc:mysql://localhost:3306/homedb";
 	private final String NAME = "root";
+	private final String PASS = "";*/
 	//private final String PASS = "123";
-	//private final String PASS = "1234";
-	private final String PASS = "";
+	private final String URL = "jdbc:mysql://192.168.81.205:3306/crud2";
+	private final String NAME = "javauser";
+    private final String PASS = "1234";
 
 	private Connection con;
 	private Statement comand;
