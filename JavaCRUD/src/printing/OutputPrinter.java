@@ -20,6 +20,7 @@ public class OutputPrinter implements Printable {
 	    {
 	    this.printData = printDataIn;
 	    }
+	    
 
 	@Override
 	public int print(Graphics g, PageFormat pf, int page) throws PrinterException
@@ -38,7 +39,7 @@ public class OutputPrinter implements Printable {
 	    g2d.translate(x, y); 
 
 	    // Calculate the line height
-	    Font font = new Font("Serif", Font.PLAIN, 30);
+	    Font font = new Font("Serif", Font.PLAIN, 25);
 	    FontMetrics metrics = g.getFontMetrics(font);
 	    int lineHeight = metrics.getHeight();
 
@@ -49,8 +50,8 @@ public class OutputPrinter implements Printable {
 	    {
 	        String line;
 	        // Just a safety net in case no margin was added.
-	        x += 50;
-	        y += 50;
+	        x += 20;
+	        y += 20;
 	        while ((line = br.readLine()) != null)
 	        {
 	            y += lineHeight;

@@ -40,7 +40,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MainWindow3 extends JFrame implements TableModelListener {
+//public class MainWindow3 extends JFrame implements TableModelListener {
+public class MainWindow3 extends JFrame   {
 
 	private JButton buttonSkraINN, buttonSkraUT, bPrint, bScan, bTestPr;
 	private JButton buttonSave;
@@ -52,18 +53,18 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 	private JScrollPane spTable;
 	private JTable tTable;
 	private JLabel rekkaNumerLable, logoLabel, pontunarNumerLabel;
-	//private String email;
+	// private String email;
 	FetchIspan fetchispan;
 	FetchGlerskalinn fetchGlerskalinn;
 	MyTableModel myTableModel;
 	private final String orderGeymslaIspan = "391000";
 
 	// Constructor
-//	public MainWindow3(String email) {
-	public MainWindow3(){
+	// public MainWindow3(String email) {
+	public MainWindow3() {
 		super("Rekkar IspanHF ver. 0.2");
 
-	//	this.email = email;
+		// this.email = email;
 
 		try {
 			UIManager
@@ -114,33 +115,30 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 						int rekka = e.getRekkan();
 						if (rekka == rekkaUI) {
 							// this dialog is slowing us down :-)
-							
-							 int n = JOptionPane.showConfirmDialog(null,
-							  "ATH Rekka  " + tfRekkaNumer.getText()
-							  
-							  + " Verdur\n " + "Fjarlaegdur !", null,
-							  JOptionPane.YES_NO_OPTION);
-							  
-							  if (n == JOptionPane.YES_OPTION) {
-							 
 
-							// TRY TO USE UPDATE
-							fetchGlerskalinn.delete(rekkaUI);
+							int n = JOptionPane.showConfirmDialog(null,
+									"ATH Rekka  " + tfRekkaNumer.getText()
 
-							myTableModel.refreshWhenDelete(row);
+									+ " Verdur\n " + "Fjarlaegdur !", null,
+									JOptionPane.YES_NO_OPTION);
 
-							 }
+							if (n == JOptionPane.YES_OPTION) {
 
-							
-							  else if (n == JOptionPane.NO_OPTION) {
-							  System.out.println("pressed NO "); // recursion
-						
-							  
-							 // refreshTable();
-							 cleanFields();
-							  
-							  }
-							 
+								// TRY TO USE UPDATE
+								fetchGlerskalinn.delete(rekkaUI);
+
+								myTableModel.refreshWhenDelete(row);
+
+							}
+
+							else if (n == JOptionPane.NO_OPTION) {
+								System.out.println("pressed NO "); // recursion
+
+								// refreshTable();
+								cleanFields();
+
+							}
+
 						}
 					}
 
@@ -149,7 +147,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 
 		});
 
-		pForm.add(buttonSkraINN);
+		//pForm.add(buttonSkraINN);
 
 		buttonSkraUT = new JButton("Skrá Út lánað eða geymsla");
 
@@ -223,11 +221,6 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		});
 
 		pForm.add(buttonSkraUT);
-		
-		
-		
-		
-		
 
 		bPrint = new JButton("Print");
 		bPrint.addActionListener(new ActionListener() {
@@ -244,18 +237,17 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 			}
 		});
 		pForm.add(bPrint);
-		
-		bTestPr = new JButton("Test");
+
+		/*bTestPr = new JButton("Test");
 		bTestPr.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				printToPrinter();
+				printToPrinter("Sergey");
 			}
 		});
-		pForm.add(bTestPr);
-		
+		pForm.add(bTestPr);*/
 
 		bScan = new JButton("Scan");
 		bScan.addActionListener(new ActionListener() {
@@ -327,7 +319,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 
 					for (DTOPontunVasar rk : allRecks) {
 
-						if ( orderGeymslaIspan.equals(rk.getPontunarN())) {
+						if (orderGeymslaIspan.equals(rk.getPontunarN())) {
 
 						} else {
 							temp = new DTOPontunVasar(rk.getPontunarN(), rk
@@ -337,10 +329,19 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 						}
 
 					}
-					if (recksToEmailWithoutGeymsla.size()>0){// we check if any of orders, which suppose to  go out, are left in collection/
+					if (recksToEmailWithoutGeymsla.size() > 0) {// we check if
+																// any of
+																// orders, which
+																// suppose to go
+																// out, are left
+																// in
+																// collection/
 
-				/*	MailSender ms = new MailSender(recksToEmailWithoutGeymsla, email);
-					ms.sendMailConfirmed();*/
+						/*
+						 * MailSender ms = new
+						 * MailSender(recksToEmailWithoutGeymsla, email);
+						 * ms.sendMailConfirmed();
+						 */
 					}
 				}
 
@@ -363,9 +364,9 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 				// JOptionPane.showMessageDialog(pForm, "Enkin Rekki");
 			}
 		});
-		
-		// remove  possibility to get entrance from CSV 
-		//pForm.add(bScan);
+
+		// remove possibility to get entrance from CSV
+		// pForm.add(bScan);
 
 		/*
 		 * BufferedImage myPicture = null; try { myPicture = ImageIO.read(new
@@ -383,7 +384,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		pTable = new JPanel();
 		tTable = new JTable(myTableModel);
 		// Sorting row and col
-		myTableModel.addTableModelListener(this);
+	//	myTableModel.addTableModelListener(this);
 
 		tTable.setAutoCreateRowSorter(true);
 
@@ -432,9 +433,9 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 				columnSize.setPreferredWidth(60);
 			} else if (i == 3) {
 				columnSize.setPreferredWidth(50);
-			}  else if (i == 7) {
+			} else if (i == 7) {
 				columnSize.setPreferredWidth(150);
-			}else {
+			} else {
 				columnSize.setPreferredWidth(70);
 			}
 		}
@@ -531,7 +532,7 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 			// tfName.getText()
 			// + " skradur!");
 			myTableModel.refresh(tempentralldata);
-
+             printToPrinter(tempentralldata.getNafn());
 			cleanFields();
 		}
 
@@ -607,12 +608,12 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 
 	}
 
-	class MyTableModel extends AbstractTableModel {
+	class MyTableModel extends AbstractTableModel implements TableModelListener {
 		FetchGlerskalinn fetchGlerskalinn = new FetchGlerskalinn();
 		List<Entrence> entlist = fetchGlerskalinn.readAll();
 
 		String[] orderColNames = { "Nafn", "Pontun", "Dagsetning", "Rekka",
-				"Siminn", "Gata", "PostN","ATH ! " };
+				"Siminn", "Gata", "PostN", "ATH ! " };
 
 		@Override
 		public int getRowCount() {
@@ -625,29 +626,30 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 			// TODO Auto-generated method stub
 			return 8;
 		}
-		 public Class getColumnClass(int column) {
-             switch (column) {
-                 case 0:
-                     return String.class;
-                 case 1:
-                     return Integer.class;
-                 case 2:
-                     return String.class;
-                 case 3:
-                     return Integer.class;
-                 case 4:
-                     return String.class;
-                 case 5:
-                     return String.class;
-                 case 6:
-                     return String.class;
-                 case 7:
-                     return String.class;
-               
-                 default:
-                     return String.class;
-             }
-         }
+
+		public Class getColumnClass(int column) {
+			switch (column) {
+			case 0:
+				return String.class;
+			case 1:
+				return Integer.class;
+			case 2:
+				return String.class;
+			case 3:
+				return Integer.class;
+			case 4:
+				return String.class;
+			case 5:
+				return String.class;
+			case 6:
+				return String.class;
+			case 7:
+				return String.class;
+
+			default:
+				return String.class;
+			}
+		}
 
 		@Override
 		public Object getValueAt(int row, int col) {
@@ -691,14 +693,15 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		public void setValueAt(Object writtenMsg, int row, int col) {
 			String msgFromtable = writtenMsg.toString();
 			if (col == 7) {
-			 entlist.get(row).setMsgATH(msgFromtable);
+				entlist.get(row).setMsgATH(msgFromtable);
 			}
 
 			// Notify the world about the change
 			// fireTableDataChanged();
+		
 
-			 TableModelEvent event = new TableModelEvent(this, row, row, col);
-			 fireTableChanged(event);
+			TableModelEvent event = new TableModelEvent(this, row, row, col);
+			fireTableChanged(event);
 		}
 
 		public void refresh(Entrence tempentralldata) {
@@ -712,30 +715,32 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 			fireTableRowsDeleted(row, row);
 		}
 
+		@Override
+		
+		public void tableChanged(TableModelEvent eventDataChanged) {
+			
+			// TODO Auto-generated method stub
+			
+			int row = eventDataChanged.getFirstRow();
+			//int lrow = eventDataChanged.getLastRow();
+			int column = eventDataChanged.getColumn();
+			MyTableModel model = (MyTableModel) eventDataChanged.getSource();
+			// String columnName = model.getColumnName(column);// hardcoded in our
+			// case - "ath" name
+			Object dataChanged = model.getValueAt(row, column);
+			Object rekkaN = model.getValueAt(row, 3);
+			
+			
+			// int rekkaNoSendToSQL =Integer.parseInt(rekkaN.toString());
+			int rekkaNoSendToSQL = (int) rekkaN;
+			String data = dataChanged.toString();
+			
+			fetchGlerskalinn.createMSG(data, rekkaNoSendToSQL);
+			System.out.println("MSG creation"+rekkaNoSendToSQL);
+			
+		}
 	}
 
-	@Override
-	public void tableChanged(TableModelEvent eventDataChanged) {
-	
-
-	// TODO Auto-generated method stub
-
-
-	  int row = eventDataChanged.getFirstRow(); 
-	  int column =eventDataChanged.getColumn();
-	  MyTableModel model = (MyTableModel)eventDataChanged.getSource(); 
-	//  String columnName = model.getColumnName(column);// hardcoded in our case - "ath" name
-	  Object dataChanged = model.getValueAt(row,column);
-	  Object rekkaN = model.getValueAt(row, 3);
-	//  int rekkaNoSendToSQL =Integer.parseInt(rekkaN.toString());
-	  int rekkaNoSendToSQL = (int) rekkaN;
-	  String data = dataChanged.toString();
-	  
-	  
-	 fetchGlerskalinn.createMSG(data, rekkaNoSendToSQL);
-	 
-	}
-	 
 
 	/*
 	 * @Override public void tableChanged(TableModelEvent e) { // TODO
@@ -760,24 +765,61 @@ public class MainWindow3 extends JFrame implements TableModelListener {
 		}
 
 	}
-	private void printToPrinter()
-	{
-	   // String printData = CalculationTextArea.getText() + "\n" + SpecificTextArea.getText();
-		   String printData = "Some text \n Some other text" ;
-	    PrinterJob job = PrinterJob.getPrinterJob();
-	    job.setPrintable(new OutputPrinter(printData));
-	    boolean doPrint = job.printDialog();
-	    if (doPrint)
-	    { 
-	        try 
-	        {
-	            job.print();
-	        }
-	        catch (PrinterException e)
-	        {
-	            // Print job did not complete.
-	        }
-	    }
-	}
 
+	private void printToPrinter( String nameToPrint) {
+		Date date = new Date();
+		Format formatter = new SimpleDateFormat("dd.MM.yyyy");
+		String s = formatter.format(date);
+
+		/*BufferedImage myPicture = null;
+		try {
+			myPicture = ImageIO.read(new File("logo2.JPG"));
+		} catch (IOException e1) { // TODO Auto-generated
+			e1.printStackTrace();
+		}
+		logoLabel = new JLabel(new ImageIcon(myPicture));*/
+		// String printData = CalculationTextArea.getText() + "\n" +
+		// SpecificTextArea.getText();
+	
+	   
+		
+		String printData = "ISPAN EHF\nSMIÐJUVEGUR 7\n200KÓPAVOGUR\nSIM.5454 300\nFAX.545 4300\n"
+			
+				+ 
+
+				"Dags : "
+				+ s
+				+ " "
+				+ " \n"
+			
+				
+				+ "Undirritaður, hefur móttekið flutningsrekka, í eigu Íspan ehf, og með undirskrift sinni\nsamþykkt skilmála Íspan varðandi lán og leigu á rekkum, en rekkar eru lánaðir\nviðskiptavinum Íspan ehf., þeim að kostnaðarlausu, allt að 7 daga, en að þeim tíma liðnum\nreiknast leigugjald samkvæmt gjaldskrá Íspan, hverju sinni, fyrir hvern byrjaðan\nsólarhring. Á sama hátt tekur viðkomandi, fulla ábyrgð á þeim rekkum sem hann hefur í\nsinni umsjá. Íspan ehf., sækir rekka á höfuðborgarsvæðinu, en nauðsynlegt er að hafa\nsamband í síma 54-54-300, til þess. Viрskiptavinir á landsbyggðinni verða að senda \nrekkana, á sinn kostnað  til: Íspan ehf. Smiрjuvegi 7, 200 Kуpavogi. (Íspan sækir rekka á \nflutningastöðvar í Reykjavík, án aukagjalds)\n"+"\n"+
+				"Rekki N:  "+tfRekkaNumer.getText() +"\n"
+			    +"Pöntun N: "+ tfpontunarNumerField.getText()
+			    +""
+				+"\n" +
+			    		"Viðskiptav:" +nameToPrint+
+			    		"\n" +
+			    		"___________________________________________________________________________________________\n" +
+			    		"SAMÞYKKI VIVÐSKIPTAVINAR\n" +
+			    		"___________________________________________________________________________________________\n" +
+			    		"\n" +
+			    		"    Rekka/ rekkumm skilað , dags._______________________________________________________\n" +
+			    		"";
+				
+			
+				
+				
+				//;
+		PrinterJob job = PrinterJob.getPrinterJob();
+		job.setPrintable(new OutputPrinter(printData));
+		boolean doPrint = job.printDialog();
+		if (doPrint) {
+			try {
+				job.print();
+			} catch (PrinterException e) {
+				// Print job did not complete.
+			}
+		}
+	}
 }

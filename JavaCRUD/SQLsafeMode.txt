@@ -1,0 +1,3 @@
+
+update homedb.javacrud2 SET ath ='TEXT' WHERE rekka = '1'
+Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column To disable safe mode, toggle the option in Preferences -> SQL Queries and reconnect.
