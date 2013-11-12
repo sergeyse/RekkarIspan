@@ -8,8 +8,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import rmi.RmiIntfServer;
-
 import mailer.MailSender;
 
 import com.crud.dao.FetchGlerskalinn;
@@ -30,9 +28,6 @@ import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.*;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.server.UnicastRemoteObject;
 import java.text.Format;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
@@ -41,7 +36,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MainWindow3 extends JFrame implements TableModelListener, RmiIntfServer{
+public class MainWindow3 extends JFrame implements TableModelListener {
 
 	private JButton buttonSkraINN, buttonSkraUT, bPrint, bScan;
 	private JButton buttonSave;
@@ -62,14 +57,6 @@ public class MainWindow3 extends JFrame implements TableModelListener, RmiIntfSe
 	// Constructor
 	public MainWindow3(String email) {
 		super("Rekkar IspanHF ver. 0.2");
-		
-	try {
-		LocateRegistry.createRegistry(1099);
-	} catch (RemoteException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-	
 
 		this.email = email;
 
@@ -747,12 +734,6 @@ public class MainWindow3 extends JFrame implements TableModelListener, RmiIntfSe
 			return false;
 		}
 
-	}
-
-	@Override
-	public void RunUpdate() throws RuntimeException {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
