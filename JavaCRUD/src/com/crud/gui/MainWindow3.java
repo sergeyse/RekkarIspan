@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Set;
 
 //public class MainWindow3 extends JFrame implements TableModelListener {
-public class MainWindow3 extends JFrame   {
+public class MainWindow3 extends JFrame  implements TableModelListener {
 
 	private JButton buttonSkraINN, buttonSkraUT, bPrint, bScan, bTestPr;
 	private JButton buttonSave;
@@ -75,6 +75,7 @@ public class MainWindow3 extends JFrame   {
 		fetchispan = new FetchIspan();
 		fetchGlerskalinn = new FetchGlerskalinn();
 		myTableModel = new MyTableModel();
+	
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		createForm();
@@ -93,14 +94,18 @@ public class MainWindow3 extends JFrame   {
 		tfRekkaNumer = new JTextField();
 		pForm.add(rekkaNumerLable);
 		pForm.add(tfRekkaNumer);
-
+   // Abandoned functionality button removed from UI 
 		buttonSkraINN = new JButton("Eyða úr kerfinu");
-		buttonSkraINN.setForeground(Color.GREEN);
+		buttonSkraINN.setForeground(Color.RED);
+		buttonSkraINN.setBackground(Color.RED);
 
 		buttonSkraINN.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				
 				delete();
 
 			}
@@ -149,9 +154,9 @@ public class MainWindow3 extends JFrame   {
 
 		//pForm.add(buttonSkraINN);
 
-		buttonSkraUT = new JButton("Skrá Út lánað eða geymsla");
+		buttonSkraUT = new JButton("Skrá lánað Út eða geymsla");
 
-		buttonSkraUT.setForeground(Color.RED);
+		buttonSkraUT.setForeground(Color.GREEN);
 
 		// JDialog settings
 		pontunDialog = new JDialog(this, "Dialog", true);
@@ -164,8 +169,42 @@ public class MainWindow3 extends JFrame   {
 		buttonSave = new JButton("Save");
 		buttonCancel = new JButton("Cancel");
 
-		pontunarNumerLabel = new JLabel("Pontunar N:(11-GEYMSLA)");
+		pontunarNumerLabel = new JLabel("Pontunar N: ( eða 11-GEYMSLA)");
 		tfpontunarNumerField = new JTextField();
+		
+		tfpontunarNumerField.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getKeyCode()== KeyEvent.VK_ENTER){
+					int pontunUI = Integer.parseInt(tfpontunarNumerField.getText());
+					if (pontunUI == 11) {
+						createGeymsla();
+						pontunDialog.setVisible(false);
+						
+					} else {
+						create();
+						
+						pontunDialog.setVisible(false);
+					}
+					cleanFields();
+					
+				}
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		JLabel emptyLable = new JLabel("");
 		p1.add(pontunarNumerLabel);
 		p1.add(tfpontunarNumerField);
@@ -176,6 +215,8 @@ public class MainWindow3 extends JFrame   {
 		pontunDialog.add(BorderLayout.CENTER, p1);
 		pontunDialog.add(BorderLayout.SOUTH, p2);
 		pontunDialog.setSize(300, 150);
+		tfpontunarNumerField.requestFocus();
+		
 		// pontunDialog.pack();
 
 		buttonSkraUT.addActionListener(new ActionListener() {
@@ -186,6 +227,33 @@ public class MainWindow3 extends JFrame   {
 
 				pontunDialog.setVisible(true);
 
+			}
+		});
+		
+		tfRekkaNumer.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				if (arg0.getKeyCode()== KeyEvent.VK_ENTER){
+					
+					pontunDialog.setVisible(true);
+					
+					
+				}
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 
@@ -202,25 +270,30 @@ public class MainWindow3 extends JFrame   {
 
 			@Override
 			public void actionPerformed(ActionEvent eSave) {
-
+				
 				// TODO Auto-generated method stub
-
+				
 				// Integer.parseInt(tfpontunarNumerField.getText())!=11
 				int pontunUI = Integer.parseInt(tfpontunarNumerField.getText());
 				if (pontunUI == 11) {
 					createGeymsla();
 					pontunDialog.setVisible(false);
-
+					
 				} else {
 					create();
-
+					
 					pontunDialog.setVisible(false);
 				}
+			
+		
+
+				
 			}
 
-		});
 
-		pForm.add(buttonSkraUT);
+		});
+	
+        /// change location of a button in UI
 
 		bPrint = new JButton("Print");
 		bPrint.addActionListener(new ActionListener() {
@@ -236,7 +309,10 @@ public class MainWindow3 extends JFrame   {
 				}
 			}
 		});
+		// change location of a button in UI
 		pForm.add(bPrint);
+		pForm.add(buttonSkraUT);
+		pForm.add(buttonSkraINN);
 
 		/*bTestPr = new JButton("Test");
 		bTestPr.addActionListener(new ActionListener() {
@@ -383,9 +459,12 @@ public class MainWindow3 extends JFrame   {
 
 		pTable = new JPanel();
 		tTable = new JTable(myTableModel);
+			myTableModel.addTableModelListener(this);
+		
+	
+		
 		// Sorting row and col
-	//	myTableModel.addTableModelListener(this);
-
+ 
 		tTable.setAutoCreateRowSorter(true);
 
 		pTable.setLayout(new BorderLayout());
@@ -393,7 +472,9 @@ public class MainWindow3 extends JFrame   {
 		// custom renderer
 
 		TableColumn column = tTable.getColumnModel().getColumn(3);
-
+		
+		
+         
 		column.setCellRenderer(new DefaultTableCellRenderer() {
 			public Component getTableCellRendererComponent(JTable table,
 					Object value, boolean isSelected, boolean hasFocus,
@@ -521,7 +602,7 @@ public class MainWindow3 extends JFrame   {
 	public void create() {
 
 		// FATCHING FROM ISPAN DB
-		if (isDobleEntryNOTPresent()) {
+		if (isDobleEntryNOTPresent()&& rekkaEnterIsRight()) {
 
 			int rekka = Integer.parseInt(tfRekkaNumer.getText());
 			int pontun = Integer.parseInt(tfpontunarNumerField.getText());
@@ -608,7 +689,7 @@ public class MainWindow3 extends JFrame   {
 
 	}
 
-	class MyTableModel extends AbstractTableModel implements TableModelListener {
+	class MyTableModel extends AbstractTableModel  {
 		FetchGlerskalinn fetchGlerskalinn = new FetchGlerskalinn();
 		List<Entrence> entlist = fetchGlerskalinn.readAll();
 
@@ -694,6 +775,8 @@ public class MainWindow3 extends JFrame   {
 			String msgFromtable = writtenMsg.toString();
 			if (col == 7) {
 				entlist.get(row).setMsgATH(msgFromtable);
+				
+				
 			}
 
 			// Notify the world about the change
@@ -702,6 +785,7 @@ public class MainWindow3 extends JFrame   {
 
 			TableModelEvent event = new TableModelEvent(this, row, row, col);
 			fireTableChanged(event);
+			
 		}
 
 		public void refresh(Entrence tempentralldata) {
@@ -713,17 +797,23 @@ public class MainWindow3 extends JFrame   {
 			entlist.remove(row);// fetchGlerskalinn read all
 			// fireTableDataChanged();
 			fireTableRowsDeleted(row, row);
-		}
-
-		@Override
+		} 
 		
-		public void tableChanged(TableModelEvent eventDataChanged) {
-			
-			// TODO Auto-generated method stub
-			
-			int row = eventDataChanged.getFirstRow();
-			//int lrow = eventDataChanged.getLastRow();
-			int column = eventDataChanged.getColumn();
+	
+		
+		
+
+		//if we remove tabelModelListeners and implement all functionality in setValueAt 
+		
+	}
+	public void tableChanged(TableModelEvent eventDataChanged) {
+		
+		// TODO Auto-generated method stub
+		
+		int row = eventDataChanged.getFirstRow();
+		//int lrow = eventDataChanged.getLastRow();
+		int column = eventDataChanged.getColumn();
+		if (column==7){
 			MyTableModel model = (MyTableModel) eventDataChanged.getSource();
 			// String columnName = model.getColumnName(column);// hardcoded in our
 			// case - "ath" name
@@ -737,8 +827,8 @@ public class MainWindow3 extends JFrame   {
 			
 			fetchGlerskalinn.createMSG(data, rekkaNoSendToSQL);
 			System.out.println("MSG creation"+rekkaNoSendToSQL);
-			
-		}
+		}else{}
+		
 	}
 
 
@@ -793,7 +883,7 @@ public class MainWindow3 extends JFrame   {
 				+ " \n"
 			
 				
-				+ "Undirritaður, hefur móttekið flutningsrekka, í eigu Íspan ehf, og með undirskrift sinni\nsamþykkt skilmála Íspan varðandi lán og leigu á rekkum, en rekkar eru lánaðir\nviðskiptavinum Íspan ehf., þeim að kostnaðarlausu, allt að 7 daga, en að þeim tíma liðnum\nreiknast leigugjald samkvæmt gjaldskrá Íspan, hverju sinni, fyrir hvern byrjaðan\nsólarhring. Á sama hátt tekur viðkomandi, fulla ábyrgð á þeim rekkum sem hann hefur í\nsinni umsjá. Íspan ehf., sækir rekka á höfuðborgarsvæðinu, en nauðsynlegt er að hafa\nsamband í síma 54-54-300, til þess. Viрskiptavinir á landsbyggðinni verða að senda \nrekkana, á sinn kostnað  til: Íspan ehf. Smiрjuvegi 7, 200 Kуpavogi. (Íspan sækir rekka á \nflutningastöðvar í Reykjavík, án aukagjalds)\n"+"\n"+
+				+ "Undirritaður, hefur móttekið flutningsrekka, í eigu Íspan ehf, og með undirskrift sinni\nsamþykkt skilmála Íspan varðandi lán og leigu á rekkum, en rekkar eru lánaðir\nviðskiptavinum Íspan ehf., þeim að kostnaðarlausu, allt að 7 daga, en að þeim tíma liðnum\nreiknast leigugjald samkvæmt gjaldskrá Íspan, hverju sinni, fyrir hvern byrjaðan\nsólarhring. Á sama hátt tekur viðkomandi, fulla ábyrgð á þeim rekkum sem hann hefur í\nsinni umsjá. Íspan ehf., sækir rekka á höfuðborgarsvæðinu, en nauðsynlegt er að hafa\nsamband í síma 54-54-300, til þess. Viрskiptavinir á landsbyggðinni verða að senda \nrekkana, á sinn kostnað  til: Íspan ehf. Smiрjuvegi 7, 200 Kópavogi. (Íspan sækir rekka á \nflutningastöðvar í Reykjavík, án aukagjalds)\n"+"\n"+
 				"Rekki N:  "+tfRekkaNumer.getText() +"\n"
 			    +"Pöntun N: "+ tfpontunarNumerField.getText()
 			    +""
@@ -822,4 +912,6 @@ public class MainWindow3 extends JFrame   {
 			}
 		}
 	}
+
+
 }
