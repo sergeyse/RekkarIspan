@@ -17,6 +17,7 @@ import com.crud.dao.FetchIspan;
 import com.crud.gui.MainWindow3.MyTableModel;
 import com.crud.model.Entrence;
 import com.sun.java.swing.plaf.windows.resources.windows;
+import com.thread.TreadRefresh;
 
 import csv.DTOPontunVasar;
 import csv.StackReader;
@@ -34,10 +35,12 @@ import java.awt.Font;
 import java.io.*;
 import java.text.Format;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 //public class MainWindow3 extends JFrame implements TableModelListener {
@@ -58,10 +61,10 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 	FetchGlerskalinn fetchGlerskalinn;
 	MyTableModel myTableModel;
 	private final String orderGeymslaIspan = "391000";
-
+  //  private  List<Entrence> entlist;
 	// Constructor
 	// public MainWindow3(String email) {
-	public MainWindow3() {
+	public MainWindow3()  {
 		super("Rekkar IspanHF ver. 0.2");
 
 		// this.email = email;
@@ -72,16 +75,51 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+	/*	TreadRefresh tr =new TreadRefresh(this);
+		tr.start();*/
 		fetchispan = new FetchIspan();
 		fetchGlerskalinn = new FetchGlerskalinn();
-		myTableModel = new MyTableModel();
+		
+	  // updateModel();
+	
+	
+	myTableModel = new MyTableModel();
+      
 	
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
+   
+    
+  
 		createForm();
 		pack();
+ 
 
 	}
+/*	public void setFreshList(List<Entrence> elist){ 
+		//this.entlist= elist;
+	//	MyTableModel  mtm = new MyTableModel();
+		
+	  myTableModel.refreshWithNewList(elist);
+	  myTableModel = new MyTableModel();
+	   
+	   tTable.setModel(myTableModel);
+		
+	}*/
+
+
+
+	private void updateModel() {
+		// TODO Auto-generated method stub
+		myTableModel = new MyTableModel();
+		tTable.setModel(myTableModel);
+		System.out.println("updateJTAble");
+		customRenderer();
+		
+		
+	}
+
+
 
 	public void createForm() {
 		pForm = new JPanel();
@@ -95,7 +133,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		pForm.add(rekkaNumerLable);
 		pForm.add(tfRekkaNumer);
    // Abandoned functionality button removed from UI 
-		buttonSkraINN = new JButton("Eyða úr kerfinu");
+		buttonSkraINN = new JButton("Update");//was "eyda ur keerfinu"
 		buttonSkraINN.setForeground(Color.RED);
 		buttonSkraINN.setBackground(Color.RED);
 
@@ -104,9 +142,9 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
+				updateModel();
 				
-				
-				delete();
+				//delete();
 
 			}
 
@@ -461,8 +499,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		tTable = new JTable(myTableModel);
 			myTableModel.addTableModelListener(this);
 		
-	
-		
+
 		// Sorting row and col
  
 		tTable.setAutoCreateRowSorter(true);
@@ -470,12 +507,15 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		pTable.setLayout(new BorderLayout());
 
 		// custom renderer
-
-		TableColumn column = tTable.getColumnModel().getColumn(3);
+		
+		customRenderer();
+	
+/*
+		TableColumn column3 = tTable.getColumnModel().getColumn(3);
 		
 		
          
-		column.setCellRenderer(new DefaultTableCellRenderer() {
+		column3.setCellRenderer(new DefaultTableCellRenderer() {
 			public Component getTableCellRendererComponent(JTable table,
 					Object value, boolean isSelected, boolean hasFocus,
 					int row, int col) {
@@ -502,6 +542,132 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 			} // end of getTableCellRendererComponent
 		} // end of new DefaultTableCellRenderer
 		); // end of setCellRenderer(...)
+		
+		TableColumn tcDate = tTable.getColumnModel().getColumn(2);
+		tcDate.setCellRenderer(new DefaultTableCellRenderer() {
+			private static final long serialVersionUID = 1L;
+			private Date dateValue;
+			private SimpleDateFormat sdfNewValue = new SimpleDateFormat("dd.MM.yyyy");
+			private String valueToString = "";
+			
+			public void setValue(Object value){
+				  if ((value != null)) {
+				       String stringFormat = value.toString();
+				        try {
+				            dateValue = sdfNewValue.parse(stringFormat);
+				        } catch (ParseException e) {
+				            e.printStackTrace();
+				        }
+				 valueToString = sdfNewValue.format(dateValue);
+				      value = valueToString;
+			     //value = dateValue;
+				    }
+				super.setValue(value);
+				
+				}
+				
+				
+				
+				
+			}
+			
+			// end of getTableCellRendererComponent
+		 // end of new DefaultTableCellRenderer
+		); // end of setCellRenderer(...)
+
+		// column size
+
+		TableColumn columnSize = null;
+		for (int i = 0; i < 8; i++) {
+			columnSize = tTable.getColumnModel().getColumn(i);
+			if (i == 0) {
+				columnSize.setPreferredWidth(150); // third column is bigger
+			} else if (i == 1) {
+				columnSize.setPreferredWidth(60);
+			} else if (i == 3) {
+				columnSize.setPreferredWidth(50);
+			} else if (i == 7) {
+				columnSize.setPreferredWidth(150);
+			} else {
+				columnSize.setPreferredWidth(70);
+			}
+		}*/
+
+		spTable = new JScrollPane(tTable);
+		spTable.setViewportView(tTable);
+		pTable.add(spTable, BorderLayout.CENTER);
+
+		getContentPane().add(pTable);
+	}
+
+	
+
+
+
+	private void customRenderer() {
+		TableColumn column3 = tTable.getColumnModel().getColumn(3);
+		
+		
+        
+		column3.setCellRenderer(new DefaultTableCellRenderer() {
+			public Component getTableCellRendererComponent(JTable table,
+					Object value, boolean isSelected, boolean hasFocus,
+					int row, int col) {
+
+				JLabel label = (JLabel) super.getTableCellRendererComponent(
+						table, value, isSelected, hasFocus, row, col);
+
+				// right-align the value
+				label.setHorizontalAlignment(JLabel.RIGHT);
+
+				// display that more than $100 in red
+				if ((Integer) value <= 999) {
+					label.setForeground(Color.RED);
+				} else if ((Integer) value >= 1000
+						&& Integer.parseInt(value.toString()) <= 1999) {
+					label.setForeground(Color.GREEN);
+				} else {
+
+					label.setForeground(Color.BLUE);
+				}
+
+				return label;
+
+			} // end of getTableCellRendererComponent
+		} // end of new DefaultTableCellRenderer
+		); // end of setCellRenderer(...)
+		
+/*		TableColumn tcDate = tTable.getColumnModel().getColumn(2);
+		tcDate.setCellRenderer(new DefaultTableCellRenderer() {
+			private static final long serialVersionUID = 1L;
+			private Date dateValue;
+			private SimpleDateFormat sdfNewValue = new SimpleDateFormat("dd.MM.yyyy");
+			private String valueToString = "";
+			
+			public void setValue(Object value){
+				  if ((value != null)) {
+				       String stringFormat = value.toString();
+				        try {
+				            dateValue = sdfNewValue.parse(stringFormat);
+				        } catch (ParseException e) {
+				            e.printStackTrace();
+				        }
+				 valueToString = sdfNewValue.format(dateValue);
+				      value = valueToString;
+			     //value = dateValue;
+				    }
+				super.setValue(value);
+				
+				}
+				
+				
+				
+				
+			}
+			
+			// end of getTableCellRendererComponent
+		 // end of new DefaultTableCellRenderer
+		)*/; // end of setCellRenderer(...)
 
 		// column size
 
@@ -520,14 +686,8 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 				columnSize.setPreferredWidth(70);
 			}
 		}
-
-		spTable = new JScrollPane(tTable);
-		spTable.setViewportView(tTable);
-		pTable.add(spTable, BorderLayout.CENTER);
-
-		getContentPane().add(pTable);
+		
 	}
-
 	private boolean isDobleEntryNOTPresent() {
 
 		List<Entrence> entr = fetchGlerskalinn.readAll();
@@ -553,7 +713,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 						String s = formatter.format(date);
 
 						Entrence entrenseGeymsla = new Entrence(
-								"ISPAN GEYMSLA", 11, s, rekka, "5454300",
+								"ISPAN GEYMSLA", 11, date, rekka, "5454300",
 								"Smidjuvegur", "Kopavogur");
 						fetchGlerskalinn.delete(rekkaUI);
 						myTableModel.refreshWhenDelete(row);
@@ -678,7 +838,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 			Format formatter = new SimpleDateFormat("dd.MM.yyyy");
 			String s = formatter.format(date);
 
-			Entrence entrenseGeymsla = new Entrence("ISPAN GEYMSLA", 11, s,
+			Entrence entrenseGeymsla = new Entrence("ISPAN GEYMSLA", 11, date,
 					rekkaUI, "5454300", "Smidjuvegur", "Kopavogur");
 
 			fetchGlerskalinn.create(entrenseGeymsla);
@@ -690,8 +850,22 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 	}
 
 	class MyTableModel extends AbstractTableModel  {
+		
+
 		FetchGlerskalinn fetchGlerskalinn = new FetchGlerskalinn();
+		
 		List<Entrence> entlist = fetchGlerskalinn.readAll();
+		
+	
+		
+		
+		public  void refreshWithNewList( List<Entrence> entrlist) {
+			this.entlist = entrlist;
+			// TODO Auto-generated method stub
+			
+			fireTableDataChanged();
+			
+		}
 
 		String[] orderColNames = { "Nafn", "Pontun", "Dagsetning", "Rekka",
 				"Siminn", "Gata", "PostN", "ATH ! " };
@@ -708,14 +882,14 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 			return 8;
 		}
 
-		public Class getColumnClass(int column) {
+		public Class<?> getColumnClass(int column) {
 			switch (column) {
 			case 0:
 				return String.class;
 			case 1:
 				return Integer.class;
 			case 2:
-				return String.class;
+				return Date.class;
 			case 3:
 				return Integer.class;
 			case 4:
@@ -826,7 +1000,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 			String data = dataChanged.toString();
 			
 			fetchGlerskalinn.createMSG(data, rekkaNoSendToSQL);
-			System.out.println("MSG creation"+rekkaNoSendToSQL);
+			System.out.println("MSG creation "+rekkaNoSendToSQL);
 		}else{}
 		
 	}

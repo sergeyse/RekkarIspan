@@ -1,18 +1,20 @@
 package com.crud.model;
 
+import java.util.Date;
+
 public class Entrence {
 	private int id;
 
 	private String nafn;
 	private int pontun;
-	private String dagsetning;
+	private Date dagsetning;
 	private int rekkan;
 	private String siminn;
 	private String gata;
 	private String postn;
 	private String msgATH;
 
-	public Entrence(int id, String nafn, int pontun, String dagsetning,
+	public Entrence(int id, String nafn, int pontun, Date dagsetning,
 			int rekkan, String siminn, String gata, String postn) {
 		this.id = id;
 		this.nafn = nafn;
@@ -26,7 +28,7 @@ public class Entrence {
 	}
 
 	// overloaded constructor
-	public Entrence(String nafn, int pontun, String dagsetning, int rekkan,
+	public Entrence(String nafn, int pontun, Date dagsetning, int rekkan,
 			String siminn, String gata, String postn) {
 		this.nafn = nafn;
 		this.pontun = pontun;
@@ -38,7 +40,7 @@ public class Entrence {
 
 	}
 
-	public Entrence( String nafn, int pontun, String dagsetning,
+	public Entrence( String nafn, int pontun, Date dagsetning,
 			int rekkan, String siminn, String gata, String postn, String msgATH) {
 	
 		this.nafn = nafn;
@@ -83,11 +85,11 @@ public class Entrence {
 		this.pontun = pontun;
 	}
 
-	public String getDagsetning() {
+	public Date getDagsetning() {
 		return dagsetning;
 	}
 
-	public void setDagsetning(String dagsetning) {
+	public void setDagsetning(Date dagsetning) {
 		this.dagsetning = dagsetning;
 	}
 

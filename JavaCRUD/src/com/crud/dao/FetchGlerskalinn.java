@@ -19,13 +19,13 @@ public class FetchGlerskalinn {
 	//private final String NAME = "javauser";
   //  private final String PASS = "123";
 //	private final String PASS = "1234";
-/*	private final String URL = "jdbc:mysql://localhost:3306/homedb";
+	private final String URL = "jdbc:mysql://localhost:3306/homedb";
 	private final String NAME = "root";
-	private final String PASS = "";*/
+	private final String PASS = "";
 	//private final String PASS = "123";
-	private final String URL = "jdbc:mysql://192.168.81.205:3306/crud2";
+/*	private final String URL = "jdbc:mysql://192.168.81.205:3306/crud2";
 	private final String NAME = "javauser";
-    private final String PASS = "1234";
+    private final String PASS = "1234";*/
 
 	private Connection con;
 	private Statement comand;
@@ -94,7 +94,7 @@ public class FetchGlerskalinn {
 			rs = comand.executeQuery("SELECT * FROM JavaCRUD2");
 			while (rs.next()) {
 				temp = new Entrence(rs.getString("nafn"), rs.getInt("pontun"),
-						rs.getString("dagsetning"), rs.getInt("rekka"),
+						rs.getDate("dagsetning"), rs.getInt("rekka"),
 						rs.getString("siminn"), rs.getString("gata"),
 						rs.getString("postn"),rs.getString("ath"));
 				list.add(temp);

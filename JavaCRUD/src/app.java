@@ -1,20 +1,31 @@
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
 import javax.swing.JFrame;
 
 
 import com.crud.gui.MainWindow3;
+import com.test.rmi.InterfaceRMI;
 
 
-public class app {
+public class app  {// extends UnicastRemoteObject implements InterfaceRMI{
+/*	
+	static MainWindow3 mw ;
 
+	protected app() throws RemoteException {
+		super();
+		// TODO Auto-generated constructor stub
+	}  
+*/
 	public static void main(String[] args) {
-		
-		MainWindow3 mainWindow3 = new MainWindow3();
-	     mainWindow3.setVisible(true);
-	     mainWindow3.setSize(700, 800);
-		mainWindow3.setResizable(true);
-		mainWindow3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	/*	
+		mw = new MainWindow3();
+	    mw.setVisible(true);
+	     mw.setSize(700, 800);
+		mw.setResizable(true);
+		mw.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
 		   
-		/* if (args.length == 0) {
+	/*	 if (args.length == 0) {
 		     System.out.println("\nUsage: prog.jar  reciver'sEmail");
 		   //  System.exit(0);
 		 	MainWindow3 mainWindow3 = new MainWindow3("solveig");
@@ -24,13 +35,21 @@ public class app {
 			mainWindow3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		     
 		     
-		   }else{
-		MainWindow3 mainWindow3 = new MainWindow3(args[0]);
+		   }else{*/
+		MainWindow3 mainWindow3 = new MainWindow3();
 	     mainWindow3.setVisible(true);
 	     mainWindow3.setSize(700, 700);
 		mainWindow3.setResizable(true);
 		mainWindow3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		   }*/
+		   }
 	}
 
-}
+/*	@Override
+	public void runMyTask() throws RemoteException {
+		// TODO Auto-generated method stub
+           mw.refreshTbl();
+	System.out.println("Task exec");
+		
+	}*/
+
+//}
