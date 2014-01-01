@@ -46,7 +46,7 @@ import java.util.Set;
 //public class MainWindow3 extends JFrame implements TableModelListener {
 public class MainWindow3 extends JFrame  implements TableModelListener {
 
-	private JButton buttonSkraINN, buttonSkraUT, bPrint, bScan, bTestPr;
+	public JButton buttonSkraINN, buttonSkraUT, bPrint, bScan, bTestPr;
 	private JButton buttonSave;
 	private JButton buttonCancel;
 	private JTextField tfRekkaNumer;
@@ -61,6 +61,8 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 	FetchGlerskalinn fetchGlerskalinn;
 	MyTableModel myTableModel;
 	private final String orderGeymslaIspan = "391000";
+
+	
   //  private  List<Entrence> entlist;
 	// Constructor
 	// public MainWindow3(String email) {
@@ -88,13 +90,13 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
       
 	
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-   
-    
+     
+		
   
 		createForm();
 		pack();
  
-
+	
 	}
 /*	public void setFreshList(List<Entrence> elist){ 
 		//this.entlist= elist;
@@ -112,7 +114,12 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 	private void updateModel() {
 		// TODO Auto-generated method stub
 		myTableModel = new MyTableModel();
+		
+		//do not foget a listener for a model after updates 
+		myTableModel.addTableModelListener(this);
+		
 		tTable.setModel(myTableModel);
+		
 		System.out.println("updateJTAble");
 		customRenderer();
 		
@@ -134,8 +141,8 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		pForm.add(tfRekkaNumer);
    // Abandoned functionality button removed from UI 
 		buttonSkraINN = new JButton("Update");//was "eyda ur keerfinu"
-		buttonSkraINN.setForeground(Color.RED);
-		buttonSkraINN.setBackground(Color.RED);
+		buttonSkraINN.setForeground(Color.green);
+		buttonSkraINN.setBackground(Color.green);
 
 		buttonSkraINN.addActionListener(new ActionListener() {
 
@@ -143,6 +150,8 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				updateModel();
+				buttonSkraINN.setForeground(Color.green);
+				buttonSkraINN.setBackground(Color.green);
 				
 				//delete();
 
@@ -672,7 +681,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		// column size
 
 		TableColumn columnSize = null;
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 9; i++) {
 			columnSize = tTable.getColumnModel().getColumn(i);
 			if (i == 0) {
 				columnSize.setPreferredWidth(150); // third column is bigger
@@ -863,12 +872,13 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 			this.entlist = entrlist;
 			// TODO Auto-generated method stub
 			
+			
 			fireTableDataChanged();
 			
 		}
 
 		String[] orderColNames = { "Nafn", "Pontun", "Dagsetning", "Rekka",
-				"Siminn", "Gata", "PostN", "ATH ! " };
+				"Siminn", "Gata", "PostN", "ATH ! ","Buinn ad hringja" };
 
 		@Override
 		public int getRowCount() {
@@ -879,7 +889,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		@Override
 		public int getColumnCount() {
 			// TODO Auto-generated method stub
-			return 8;
+			return 9;
 		}
 
 		public Class<?> getColumnClass(int column) {
@@ -900,6 +910,8 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 				return String.class;
 			case 7:
 				return String.class;
+			case 8 : 
+				return Boolean.class;
 
 			default:
 				return String.class;
@@ -926,6 +938,8 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 				return entlist.get(row).getPostn();
 			case 7:
 				return entlist.get(row).getMsgATH();
+			case 8:
+				return entlist.get(row).getCallChecked();
 			default:
 				return "";
 			}
@@ -937,7 +951,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 
 		public boolean isCellEditable(int row, int col) {
 
-			if (col == 7) {
+			if (col == 7 || col== 8) {
 				return true;
 			} else {
 				return false;
@@ -946,11 +960,15 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 
 		// Update the model when the use changes the quantity
 		public void setValueAt(Object writtenMsg, int row, int col) {
-			String msgFromtable = writtenMsg.toString();
+			
 			if (col == 7) {
+				String msgFromtable = writtenMsg.toString();
 				entlist.get(row).setMsgATH(msgFromtable);
 				
 				
+			}else if (col == 8){
+				Boolean chechedcall= (Boolean)writtenMsg;
+				entlist.get(row).setCallChecked(chechedcall);
 			}
 
 			// Notify the world about the change
@@ -1001,7 +1019,18 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 			
 			fetchGlerskalinn.createMSG(data, rekkaNoSendToSQL);
 			System.out.println("MSG creation "+rekkaNoSendToSQL);
-		}else{}
+		}else if(column ==8){
+			MyTableModel model = (MyTableModel) eventDataChanged.getSource();
+			Object rekkaN = model.getValueAt(row, 3);
+			boolean dataChanged = (boolean) model.getValueAt(row, column);
+			int rekkaNoSendToSQL = (int) rekkaN;
+			fetchGlerskalinn.createCheck(dataChanged,rekkaNoSendToSQL);
+			System.out.println("added boolean ");
+			
+			
+		}
+				
+		
 		
 	}
 
@@ -1085,6 +1114,15 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 				// Print job did not complete.
 			}
 		}
+	}
+
+
+
+	public void showRefreshMSG() {
+		// TODO Auto-generated method stub
+		System.out.println("refresh msg");
+		buttonSkraINN.setForeground(Color.RED);
+		
 	}
 
 

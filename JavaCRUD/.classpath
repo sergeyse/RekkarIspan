@@ -24,6 +24,6 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/sergeyse/Downloads/Mailer/Mail/Mail/EWSJavaAPI_1.2/EWSJavaAPI_1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/sergeyse/Downloads/Mailer/Mail/Mail/commons-httpclient-3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/sergeyse/Downloads/Mailer/Mail/Mail/jcifs-1.3.17.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/javaRMI"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/javaRMI"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

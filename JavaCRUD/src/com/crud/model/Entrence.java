@@ -13,6 +13,7 @@ public class Entrence {
 	private String gata;
 	private String postn;
 	private String msgATH;
+	private boolean b;
 
 	public Entrence(int id, String nafn, int pontun, Date dagsetning,
 			int rekkan, String siminn, String gata, String postn) {
@@ -41,7 +42,7 @@ public class Entrence {
 	}
 
 	public Entrence( String nafn, int pontun, Date dagsetning,
-			int rekkan, String siminn, String gata, String postn, String msgATH) {
+			int rekkan, String siminn, String gata, String postn, String msgATH, boolean b) {
 	
 		this.nafn = nafn;
 		this.pontun = pontun;
@@ -51,6 +52,7 @@ public class Entrence {
 		this.gata = gata;
 		this.postn = postn;
 		this.msgATH = msgATH;
+		this.b = b;
 	}
 
 	public String getMsgATH() {
@@ -59,6 +61,14 @@ public class Entrence {
 
 	public void setMsgATH(String msgATH) {
 		this.msgATH = msgATH;
+	}
+
+	public boolean getCallChecked() {
+		return b;
+	}
+
+	public void setCallChecked(boolean b) {
+		this.b = b;
 	}
 
 	public int getId() {

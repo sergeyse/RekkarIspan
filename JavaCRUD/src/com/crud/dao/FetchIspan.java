@@ -59,7 +59,11 @@ public class FetchIspan {
 		Date date = new Date();
 
 		Format formatter = new SimpleDateFormat("dd.MM.yyyy");
-		String s = formatter.format(date);
+		
+		//--- need to check recording function with date instead of string  
+		
+		
+	//	String s = formatter.format(date);
 
 		// if pontunn.length < 6 show message
 		try {
@@ -77,7 +81,7 @@ public class FetchIspan {
 						.executeQuery("SELECT Navn,Leveranseadresse,LeveransePostnummer,TelefonLevering  FROM dbo.tabOrdre  WHERE Ordrenummer = "
 								+ pontunN + ";");
 				while (rs.next()) {
-					temp = new Entrence(rs.getString("Navn"), pontunN, s,
+					temp = new Entrence(rs.getString("Navn"), pontunN, date,
 							rekkan, rs.getString("TelefonLevering"),
 							rs.getString("Leveranseadresse"),
 							rs.getString("LeveransePostnummer"));
@@ -95,11 +99,11 @@ public class FetchIspan {
 		}
 		// return msg when order is not existed
 		//return null;
-		tempNullPontun = new Entrence("Not Found in DB", 01, s, rekkan, "siminn", "gata", "postn");
+		tempNullPontun = new Entrence("Not Found in DB", 01, date, rekkan, "siminn", "gata", "postn");
 		FetchGlerskalinn f = new FetchGlerskalinn();
 		f.create(tempNullPontun);
 		
-		return tempNullPontun = new Entrence("Not Found in DB", 01, s, rekkan, "siminn", "gata", "postn");
+		return tempNullPontun = new Entrence("Not Found in DB", 01, date, rekkan, "siminn", "gata", "postn");
 		
 		
 	}

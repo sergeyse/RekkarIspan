@@ -19,7 +19,7 @@ public class RmiServer {
 		app a = new app();
        
 		Registry reg = LocateRegistry.createRegistry(Constants.RMI_PORT);
-		reg.bind(Constants.RMI_ID, a);
+		reg.rebind(Constants.RMI_ID, a);
 		System.out.println("SERVER STARTED");
 
 	}

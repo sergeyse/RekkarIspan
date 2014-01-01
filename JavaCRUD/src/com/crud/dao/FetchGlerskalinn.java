@@ -96,7 +96,7 @@ public class FetchGlerskalinn {
 				temp = new Entrence(rs.getString("nafn"), rs.getInt("pontun"),
 						rs.getDate("dagsetning"), rs.getInt("rekka"),
 						rs.getString("siminn"), rs.getString("gata"),
-						rs.getString("postn"),rs.getString("ath"));
+						rs.getString("postn"),rs.getString("ath"),rs.getBoolean("checkedcall"));
 				list.add(temp);
 			}
 			return list;
@@ -144,6 +144,30 @@ public class FetchGlerskalinn {
 					+ msgFromtable+ "' WHERE  rekka = '"+ rekka+ "';");
 		} catch (SQLException e) {
 			System.err.println("Error entring user : " + e.getMessage());
+		}
+		catch ( Exception e){
+			System.out.println("No such entry in db ");
+		}
+				
+				finally {
+			fechar();
+		}
+	}
+
+	public void createCheck(boolean dataChanged, int rekkaNoSendToSQL) {
+		// TODO Auto-generated method stub
+		int x = 0;
+		
+		// strange behavior of the mySQL java.lang.Boolean if the configuration property tinyInt1isBit is set to true (the default) and the storage size is 1, or java.lang.Integer if not.
+		if (dataChanged== true){
+			 x = 1;
+		}
+		conectar();
+		try {
+			comand.execute("UPDATE JavaCRUD2  SET  checkedcall ='"
+					+ x+ "' WHERE  rekka = '"+ rekkaNoSendToSQL+ "';");
+		} catch (SQLException e) {
+			System.err.println("Error entring Cheched Call : " + e.getMessage());
 		}
 		catch ( Exception e){
 			System.out.println("No such entry in db ");
