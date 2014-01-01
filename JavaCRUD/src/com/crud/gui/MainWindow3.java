@@ -46,7 +46,7 @@ import java.util.Set;
 //public class MainWindow3 extends JFrame implements TableModelListener {
 public class MainWindow3 extends JFrame  implements TableModelListener {
 
-	public JButton buttonSkraINN, buttonSkraUT, bPrint, bScan, bTestPr;
+	public JButton buttonSkraINN, buttonSkraUT, bPrint, bScan, bTestPr;// change to a private variables back and make public API 
 	private JButton buttonSave;
 	private JButton buttonCancel;
 	private JTextField tfRekkaNumer;
