@@ -9,3 +9,7 @@ CREATE TABLE tabOrder  (id INT NOT NULL AUTO_INCREMENT,
 INSERT INTO tabOrder values (default, 'Þorkell Pétur Ólafsson', 'Goðatúni 14','GARÐABÆR', '848 5444', '177903'); 
 
 SELECT Navn,Gateadresse,Poststed,Telefon  FROM taborder  WHERE Ordrenummer =389934;
+
+##// convert a column with a date-string to date:
+
+update crud2.javacrud2 set dagsetning = str_to_date(dagsetning.'%d.%m.%Y');

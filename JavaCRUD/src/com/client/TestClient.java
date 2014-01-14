@@ -16,8 +16,9 @@ public class TestClient {
 	 * @throws RemoteException 
 	 * @throws NotBoundException 
 	 */
-	public static void main(String[] args) throws RemoteException, NotBoundException {
+//	public static void main(String[] args) throws RemoteException, NotBoundException {
 		// TODO Auto-generated method stub
+	public void runRemote() throws RemoteException, NotBoundException{
   Registry registry = LocateRegistry.getRegistry("localhost",Constants.RMI_PORT);
   InterfaceRMI remote = (InterfaceRMI) registry.lookup(Constants.RMI_ID);
     remote.runMyTask();

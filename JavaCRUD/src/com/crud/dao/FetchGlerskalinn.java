@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.client.TestClient;
 import com.crud.dao.banco.ConnectionFactory;
 import com.crud.model.Entrence;
 
@@ -19,13 +20,13 @@ public class FetchGlerskalinn {
 	//private final String NAME = "javauser";
   //  private final String PASS = "123";
 //	private final String PASS = "1234";
-	private final String URL = "jdbc:mysql://localhost:3306/homedb";
+/*	private final String URL = "jdbc:mysql://localhost:3306/homedb";
 	private final String NAME = "root";
-	private final String PASS = "";
+	private final String PASS = "";*/
 	//private final String PASS = "123";
-/*	private final String URL = "jdbc:mysql://192.168.81.205:3306/crud2";
+	private final String URL = "jdbc:mysql://192.168.81.205:3306/crud2";
 	private final String NAME = "javauser";
-    private final String PASS = "1234";*/
+    private final String PASS = "1234";
 
 	private Connection con;
 	private Statement comand;
@@ -58,13 +59,20 @@ public class FetchGlerskalinn {
 
 	public void create(Entrence entrfromispan) {
 		conectar();
+		
+
+		Format formatter = new SimpleDateFormat("yyyy-mm-dd");
+		String dateInRightFormat = formatter.format(entrfromispan.getDagsetning());
+		System.out.println("date is formated inFetchGS before SQL create "+ dateInRightFormat);
+		
 		try {
 			comand.execute("INSERT INTO JavaCRUD2(nafn,pontun,dagsetning,rekka ,siminn, gata, postn) VALUES('"
 					+ entrfromispan.getNafn()
 					+ "', '"
 					+ entrfromispan.getPontun()
 					+ "', '"
-					+ entrfromispan.getDagsetning()
+					//+ entrfromispan.getDagsetning()
+					+dateInRightFormat
 					+ "', '"
 					+ entrfromispan.getRekkan()
 					+ "', '"
@@ -143,7 +151,7 @@ public class FetchGlerskalinn {
 			comand.execute("UPDATE JavaCRUD2  SET  ath ='"
 					+ msgFromtable+ "' WHERE  rekka = '"+ rekka+ "';");
 		} catch (SQLException e) {
-			System.err.println("Error entring user : " + e.getMessage());
+			System.err.println("Error entring message : " + e.getMessage());
 		}
 		catch ( Exception e){
 			System.out.println("No such entry in db ");
@@ -166,6 +174,8 @@ public class FetchGlerskalinn {
 		try {
 			comand.execute("UPDATE JavaCRUD2  SET  checkedcall ='"
 					+ x+ "' WHERE  rekka = '"+ rekkaNoSendToSQL+ "';");
+			TestClient tc = new TestClient();
+			tc.runRemote();
 		} catch (SQLException e) {
 			System.err.println("Error entring Cheched Call : " + e.getMessage());
 		}

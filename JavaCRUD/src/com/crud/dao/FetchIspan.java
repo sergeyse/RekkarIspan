@@ -58,12 +58,13 @@ public class FetchIspan {
         Entrence tempNullPontun= null;
 		Date date = new Date();
 
-		Format formatter = new SimpleDateFormat("dd.MM.yyyy");
+		Format formatter = new SimpleDateFormat("yyy-mm-dd");
+		System.out.println("date is formated "+ date);
 		
 		//--- need to check recording function with date instead of string  
 		
 		
-	//	String s = formatter.format(date);
+	//String s = formatter.format(date);
 
 		// if pontunn.length < 6 show message
 		try {

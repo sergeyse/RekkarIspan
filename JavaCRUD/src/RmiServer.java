@@ -9,7 +9,7 @@ import com.test.rmi.Constants;
 public class RmiServer {
 
 	/**
-	 * @param args
+	 * @param args 
 	 * @throws RemoteException
 	 * @throws AlreadyBoundException 
 	 */
