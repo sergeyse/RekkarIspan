@@ -67,7 +67,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 	// Constructor
 	// public MainWindow3(String email) {
 	public MainWindow3()  {
-		super("Rekkar IspanHF ver. 0.2");
+		super("Rekkar Sales RMI ver. 0.2");
 
 		// this.email = email;
 
@@ -115,7 +115,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		// TODO Auto-generated method stub
 		myTableModel = new MyTableModel();
 		
-		//do not foget a listener for a model after updates 
+		//do not forget a listener for a model after updates 
 		myTableModel.addTableModelListener(this);
 		
 		tTable.setModel(myTableModel);
@@ -134,11 +134,11 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 
 		getContentPane().setLayout(
 				new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
-		rekkaNumerLable = new JLabel("  Skra Rekka Numer her :");
+		rekkaNumerLable = new JLabel(" Þegr hnappin er raudur - yttu á hann :");
 		rekkaNumerLable.setHorizontalAlignment(SwingConstants.CENTER);
 		tfRekkaNumer = new JTextField();
 		pForm.add(rekkaNumerLable);
-		pForm.add(tfRekkaNumer);
+	//	pForm.add(tfRekkaNumer);
    // Abandoned functionality button removed from UI 
 		buttonSkraINN = new JButton("Update");//was "eyda ur keerfinu"
 		buttonSkraINN.setForeground(Color.green);
@@ -358,7 +358,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		});
 		// change location of a button in UI
 		pForm.add(bPrint);
-		pForm.add(buttonSkraUT);
+		//pForm.add(buttonSkraUT);
 		pForm.add(buttonSkraINN);
 
 		/*bTestPr = new JButton("Test");

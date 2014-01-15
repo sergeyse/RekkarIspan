@@ -61,7 +61,7 @@ public class FetchGlerskalinn {
 		conectar();
 		
 
-		Format formatter = new SimpleDateFormat("yyyy-mm-dd");
+		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 		String dateInRightFormat = formatter.format(entrfromispan.getDagsetning());
 		System.out.println("date is formated inFetchGS before SQL create "+ dateInRightFormat);
 		
