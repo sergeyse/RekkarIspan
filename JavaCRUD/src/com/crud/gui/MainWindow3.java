@@ -1,4 +1,4 @@
- package com.crud.gui;
+package com.crud.gui;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -67,7 +67,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 	// Constructor
 	// public MainWindow3(String email) {
 	public MainWindow3()  {
-		super("Rekkar IspanHF Afgr 0.3 RMI");
+		super("Rekkar IspanHF ver. 0.2");
 
 		// this.email = email;
 
@@ -358,16 +358,8 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		});
 		// change location of a button in UI
 		pForm.add(bPrint);
-	
-		
-		
-		
-	pForm.add(buttonSkraUT);
-		
-		
-		
-		
-		//pForm.add(buttonSkraINN);
+		pForm.add(buttonSkraUT);
+		pForm.add(buttonSkraINN);
 
 		/*bTestPr = new JButton("Test");
 		bTestPr.addActionListener(new ActionListener() {
@@ -689,7 +681,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		// column size
 
 		TableColumn columnSize = null;
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 9; i++) {
 			columnSize = tTable.getColumnModel().getColumn(i);
 			if (i == 0) {
 				columnSize.setPreferredWidth(150); // third column is bigger
@@ -790,7 +782,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 			// tfName.getText()
 			// + " skradur!");
 			myTableModel.refresh(tempentralldata);
-          //   printToPrinter(tempentralldata.getNafn());
+             printToPrinter(tempentralldata.getNafn());
 			cleanFields();
 		}
 
@@ -897,7 +889,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		@Override
 		public int getColumnCount() {
 			// TODO Auto-generated method stub
-			return 8;
+			return 9;
 		}
 
 		public Class<?> getColumnClass(int column) {

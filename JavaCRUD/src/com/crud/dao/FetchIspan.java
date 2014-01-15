@@ -27,7 +27,6 @@ public class FetchIspan {
 	private Statement comando;
 
 	public void connect() {
-		System.out.println("connecting to sql");
 		try {
 			con = ConnectionFactory.conexao(URL, NAME, PASS,
 					ConnectionFactory.MYSQL);

@@ -1,7 +1,5 @@
 package com.crud.dao;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,24 +59,9 @@ public class FetchGlerskalinn {
 
 	public void create(Entrence entrfromispan) {
 		conectar();
-		if (entrfromispan.getPontun()== 11 ){
-			System.out.println("Call Remote");
-		  TestClient tc = new TestClient();
-		  try {
-			tc.runRemote();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Can't connect to Rem Serv");
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			
-		}
 		
 
-		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Format formatter = new SimpleDateFormat("yyyy-mm-dd");
 		String dateInRightFormat = formatter.format(entrfromispan.getDagsetning());
 		System.out.println("date is formated inFetchGS before SQL create "+ dateInRightFormat);
 		
@@ -98,7 +81,6 @@ public class FetchGlerskalinn {
 					+ entrfromispan.getGata()
 					+ "', '"
 					+ entrfromispan.getPostn() + "')");
-		
 		} catch (SQLException e) {
 			System.err.println("Error entring user : " + e.getMessage());
 		}
