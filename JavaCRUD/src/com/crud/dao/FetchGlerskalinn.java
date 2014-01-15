@@ -15,6 +15,7 @@ import java.util.List;
 import com.client.TestClient;
 import com.crud.dao.banco.ConnectionFactory;
 import com.crud.model.Entrence;
+import com.thread.TreadRefresh;
 
 public class FetchGlerskalinn {
 	//private final String URL = "jdbc:mysql://localhost:3306/CRUD";
@@ -63,17 +64,8 @@ public class FetchGlerskalinn {
 		conectar();
 		if (entrfromispan.getPontun()== 11 ){
 			System.out.println("Call Remote");
-		  TestClient tc = new TestClient();
-		  try {
-			tc.runRemote();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Can't connect to Rem Serv");
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		TreadRefresh tr = new TreadRefresh();
+		tr.run();
 			
 		}
 		

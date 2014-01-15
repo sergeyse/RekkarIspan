@@ -9,7 +9,7 @@ import java.rmi.registry.Registry;
 import com.test.rmi.Constants;
 import com.test.rmi.InterfaceRMI;
 
-public class TestClient {
+public class TestClient  {
 
 	/**
 	 * @param args
