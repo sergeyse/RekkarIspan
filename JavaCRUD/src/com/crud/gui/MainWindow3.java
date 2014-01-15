@@ -67,7 +67,8 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 	// Constructor
 	// public MainWindow3(String email) {
 	public MainWindow3()  {
-		super("Rekkar Sales RMI ver. 0.2");
+		
+		super("Rekkar IspanHF Afgr 0.3 RMI");
 
 		// this.email = email;
 
@@ -134,11 +135,11 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 
 		getContentPane().setLayout(
 				new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
-		rekkaNumerLable = new JLabel(" Þegr hnappin er raudur - yttu á hann :");
+		rekkaNumerLable = new JLabel("  Skra Rekka Numer her :");
 		rekkaNumerLable.setHorizontalAlignment(SwingConstants.CENTER);
 		tfRekkaNumer = new JTextField();
 		pForm.add(rekkaNumerLable);
-	//	pForm.add(tfRekkaNumer);
+		pForm.add(tfRekkaNumer);
    // Abandoned functionality button removed from UI 
 		buttonSkraINN = new JButton("Update");//was "eyda ur keerfinu"
 		buttonSkraINN.setForeground(Color.green);
@@ -358,8 +359,16 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		});
 		// change location of a button in UI
 		pForm.add(bPrint);
-		//pForm.add(buttonSkraUT);
-		pForm.add(buttonSkraINN);
+	
+		
+		
+		
+	pForm.add(buttonSkraUT);
+		
+		
+		
+		
+		//pForm.add(buttonSkraINN);
 
 		/*bTestPr = new JButton("Test");
 		bTestPr.addActionListener(new ActionListener() {
@@ -681,7 +690,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		// column size
 
 		TableColumn columnSize = null;
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 8; i++) {
 			columnSize = tTable.getColumnModel().getColumn(i);
 			if (i == 0) {
 				columnSize.setPreferredWidth(150); // third column is bigger
@@ -782,7 +791,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 			// tfName.getText()
 			// + " skradur!");
 			myTableModel.refresh(tempentralldata);
-             printToPrinter(tempentralldata.getNafn());
+          //   printToPrinter(tempentralldata.getNafn());
 			cleanFields();
 		}
 
@@ -889,7 +898,7 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		@Override
 		public int getColumnCount() {
 			// TODO Auto-generated method stub
-			return 9;
+			return 8;
 		}
 
 		public Class<?> getColumnClass(int column) {
