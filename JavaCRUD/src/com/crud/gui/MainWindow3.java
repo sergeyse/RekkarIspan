@@ -14,6 +14,7 @@ import mailer.MailSender;
 
 import com.crud.dao.FetchGlerskalinn;
 import com.crud.dao.FetchIspan;
+import com.crud.date.CheckDate;
 import com.crud.gui.MainWindow3.MyTableModel;
 import com.crud.model.Entrence;
 import com.sun.java.swing.plaf.windows.resources.windows;
@@ -646,37 +647,38 @@ public class MainWindow3 extends JFrame  implements TableModelListener {
 		} // end of new DefaultTableCellRenderer
 		); // end of setCellRenderer(...)
 		
-/*		TableColumn tcDate = tTable.getColumnModel().getColumn(2);
-		tcDate.setCellRenderer(new DefaultTableCellRenderer() {
-			private static final long serialVersionUID = 1L;
-			private Date dateValue;
-			private SimpleDateFormat sdfNewValue = new SimpleDateFormat("dd.MM.yyyy");
-			private String valueToString = "";
-			
-			public void setValue(Object value){
-				  if ((value != null)) {
-				       String stringFormat = value.toString();
-				        try {
-				            dateValue = sdfNewValue.parse(stringFormat);
-				        } catch (ParseException e) {
-				            e.printStackTrace();
-				        }
-				 valueToString = sdfNewValue.format(dateValue);
-				      value = valueToString;
-			     //value = dateValue;
-				    }
-				super.setValue(value);
-				
-				}
-				
-				
-				
-				
-			}
-			
-			// end of getTableCellRendererComponent
-		 // end of new DefaultTableCellRenderer
-		)*/; // end of setCellRenderer(...)
+		
+TableColumn column2 = tTable.getColumnModel().getColumn(2);
+		
+		
+        
+		column2.setCellRenderer(new DefaultTableCellRenderer() {
+			public Component getTableCellRendererComponent(JTable table,
+					Object value, boolean isSelected, boolean hasFocus,
+					int row, int col) {
+
+				JLabel label = (JLabel) super.getTableCellRendererComponent(
+						table, value, isSelected, hasFocus, row, col);
+
+				// right-align the value
+				label.setHorizontalAlignment(JLabel.RIGHT);
+                       CheckDate cd = new CheckDate();
+                      
+				// display  date that more than  4 weeks overdue  in red
+				if ( cd.isThisDateWithinFourWeeks((Date)value)== true) {
+					label.setForeground(Color.GREEN);
+				} else  {
+					label.setForeground(Color.RED);
+				} 
+
+				return label;
+
+			} // end of getTableCellRendererComponent
+		} // end of new DefaultTableCellRenderer
+		); // end of setCellRenderer(...)
+		
+		
+
 
 		// column size
 
